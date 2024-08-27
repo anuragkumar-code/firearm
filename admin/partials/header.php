@@ -1,4 +1,12 @@
-<?php include('config/db.php'); ?>
+<?php session_start();
+include('../config/db.php'); 
+
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: index.php");
+    exit();
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">

@@ -1,6 +1,47 @@
-﻿<!doctype html>
-<html lang="en">
+﻿<?php 
+session_start();
+include('config/db.php'); 
 
+?>
+
+<?php 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['loginEmail'];
+    $password = md5($_POST['loginPassword']);
+
+    $query = "SELECT * FROM users WHERE email = ? AND type = 'C' AND status = '1'";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        $user = $result->fetch_assoc();
+        if ($password === $user['password']) {
+            $_SESSION['customer_id'] = $user['id'];
+            $_SESSION['customer_name'] = $user['name'];
+			header("Location: index.php");
+            exit;
+        } else {
+            $error = "Invalid password!";
+        }
+    } else {
+        $error = "No user found with this email!";
+    }
+
+    echo "<script>
+            alert('$error');
+            $('#loginPopUp').modal('show');
+          </script>";
+}
+
+echo "<script>if ( window.history.replaceState ) {  window.history.replaceState( null, null, window.location.href ); }</script>";
+
+?>
+
+
+<!doctype html>
+<html lang="en">
 <head>
     <title>Armaments - Online Gun Shop</title>
     <!-- Required meta tags -->
@@ -22,6 +63,11 @@
 </head>
 
 <body>
+    <style>
+        .col-6{
+            margin-right: 5px!important;
+        }
+    </style>
     <div
         class="loader-wrapper position-fixed inset-0 justify-content-center align-items-center z-[9999] h-screen w-full bg-white">
         <div class="loader"></div>
@@ -37,13 +83,23 @@
                     </a>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-4">
+                <?php if (isset($_SESSION['customer_id'])){ ?>
+                    <span style="color: white;">
+                        <img src="assets/images/user.svg" alt="">
+                        <a style="color: white;" href="javascript:void(0)">Welcome, <?php echo $_SESSION['customer_name']; ?></a>
+                        /
+                        <a style="color: white;" href="functions/auth/logout.php">Logout</a>
+                    </span>
+                <?php }else{ ?>
                     <span style="color: white;">
                         <img src="assets/images/user.svg" alt="">
                         <a style="color: white;" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginPopUp">Log In </a>
-                         / 
-                        <a style="color: white;" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#registerPopUp"> Register</a>
+                        / 
+                        <a style="color: white;" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#registerPopUp">Register</a>
                     </span>
-                </div>
+                <?php } ?>
+            </div>
+
             </div>
         </div>
     </div>
@@ -76,7 +132,6 @@
                         </div>
                         <div class="d-none d-xl-block">
                             <h5>FREE DELIVERY WORLDWIDE</h5>
-                            <h6>On order Over $100</h6>
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-2">
@@ -84,8 +139,7 @@
                             <img src="assets/images/gift.svg" alt="">
                         </div>
                         <div class="d-none d-xl-block">
-                            <h5>BUY 1 GET 1 FREE</h5>
-                            <h6>On order Over $100</h6>
+                            <h5>GET BEST DEALS</h5>
                         </div>
                     </div>
                     <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
@@ -991,42 +1045,88 @@
 <div class="modal fade" id="registerPopUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="text-align:center">
         <h5 class="modal-title" id="exampleModalLabel">Register</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form action="#">
           <div class="row gy-3 gy-sm-4">
+          <div class="col-12">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="registerName" id="registerName" placeholder="Enter your name" required>
+                    <label for="registerName">Enter your name</label>
+                </div>
+            </div>
+            <div class="col-12" style="display: flex;">
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="registerPhone" id="registerPhone" placeholder="Enter your phone" onkeypress="return isNumberKey(event)" required>
+                        <label for="registerPhone">Enter your phone</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" name="registerEmail" id="registerEmail" placeholder="Enter your email" onkeyup="check_email(this.value)" required>
+                        <label for="registerEmail">Enter your e-mail</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12" style="display: flex;">
+                <div class="col-6">
+                    <div class="form-floating">
+                      <input type="password" class="form-control" name="registerPassword" id="registerPassword" placeholder="Enter password" required>
+                      <label for="registerPassword">Enter your password</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Re-enter your password" required>
+                        <label for="confirmPassword">Re-enter your password</label>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-12">
               <div class="form-floating">
-                <input type="text" class="form-control" id="registerName" placeholder="Enter your name" required>
-                <label for="registerName">Enter your name</label>
+                <input type="text" class="form-control" name="address_one" id="address_one" placeholder="Enter address line one" required>
+                <label for="address_one">Enter your address line one</label>
               </div>
             </div>
             <div class="col-12">
               <div class="form-floating">
-                <input type="email" class="form-control" id="registerEmail" placeholder="Enter your email" onkeyup="check_email(this.value)" required>
-                <label for="registerEmail">Enter your e-mail</label>
+                <input type="text" class="form-control" name="address_two" id="address_two" placeholder="Enter address line two" required>
+                <label for="address_two">Enter your address line two</label>
               </div>
             </div>
-            <div class="col-12">
-              <div class="form-floating">
-                <input type="text" class="form-control" id="registerPhone" placeholder="Enter your phone" onkeypress="return isNumberKey(event)" required>
-                <label for="registerPhone">Phone</label>
-              </div>
+            <div class="col-12" style="display: flex;">
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="city" id="city" placeholder="Enter your city" required>
+                        <label for="city">Enter your city</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="state" id="state" placeholder="Enter your state" required>
+                        <label for="state">Enter your state</label>
+                    </div>
+                </div>
             </div>
-            <div class="col-12">
-              <div class="form-floating">
-                <input type="password" class="form-control" id="registerPassword" placeholder="Enter password" required>
-                <label for="registerPassword">Password</label>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-floating">
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter your password" required>
-                <label for="confirmPassword">Re-enter your password</label>
-              </div>
+            <div class="col-12" style="display: flex;">
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="country" id="country" placeholder="Enter your country" required>
+                        <label for="country">Enter your country</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" name="pincode" id="pincode" placeholder="Enter your pincode" required onkeypress="return isNumberKey(event)">
+                        <label for="pincode">Enter your pincode</label>
+                    </div>
+                </div>
             </div>
             <div class="col-12">
               <a href="javascript:void(0)" onclick="register()" class="primary-btn w-100 btn btn-primary">Register</a>
@@ -1047,22 +1147,30 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="#">
+        <?php if (isset($error)){ ?>
+			<div class="alert alert-danger mg-b-0" role="alert">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button">
+					<span aria-hidden="true">×</span>
+				</button>
+				<strong><?php echo $error; ?></strong>
+			</div>
+		<?php } ?>
+        <form method="POST">
           <div class="row gy-3 gy-sm-4">
             <div class="col-12">
               <div class="form-floating">
-                <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                <input type="email" class="form-control" name="loginEmail" id="email" placeholder="Enter your email">
                 <label for="email">Enter your e-mail</label>
               </div>
             </div>
             <div class="col-12">
               <div class="form-floating">
-                <input type="password" class="form-control" id="password" placeholder="Enter password">
-                <label for="password">Password</label>
+                <input type="password" class="form-control" name="loginPassword" id="loginPassword" placeholder="Enter password">
+                <label for="password">Enter your password</label>
               </div>
             </div>
             <div class="col-12">
-              <a href="#" class="primary-btn w-100 btn btn-primary">Log In</a>
+              <button name="login" type="submit" class="primary-btn w-100 btn btn-primary">Log In</button>
             </div>
           </div>
         </form>
@@ -1074,28 +1182,51 @@
 
 <script type="text/javascript">
     
+    
+    
     function register(){
         var name = $('#registerName').val();
         var email = $('#registerEmail').val();
         var phone = $('#registerPhone').val();
         var password = $('#registerPassword').val();
         var confirmPassword = $('#confirmPassword').val();
+
+        var address_one = $('#address_one').val();
+        var address_two = $('#address_two').val();
+
+        var city = $('#city').val();
+        var state = $('#state').val();
+        var country = $('#country').val();
+        var pincode = $('#pincode').val();
         
         if(password != confirmPassword){
             alert('Please re-enter the password, both password should be same.');
+            $('#confirmPassword').val('');
+            return;
         }
 
         $.ajax({
             type: 'POST',
-            url: 'functions/auth/check_email.php',
+            url: 'functions/auth/register.php',
             data: {
                 name:name,
                 email:email,
                 phone:phone,
-                password:password
+                password:password,
+                address_one:address_one,
+                address_two:address_two,
+                city:city,
+                state:state,
+                country:country,
+                pincode:pincode,
             } ,
             success: function(response){
-                
+                if(response == true){
+                    $('#registerPopUp').modal('hide');
+                    alert("Registration succesfull, wait for your profile verification.")
+                }else{
+                    alert('Registration failed, please try again or contact admin.');
+                }
             }
         });
     }   
