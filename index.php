@@ -1,5 +1,4 @@
-﻿
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -1001,36 +1000,36 @@
           <div class="row gy-3 gy-sm-4">
             <div class="col-12">
               <div class="form-floating">
-                <input type="text" class="form-control" id="name" placeholder="Enter your name">
-                <label for="name">Enter your name</label>
+                <input type="text" class="form-control" id="registerName" placeholder="Enter your name" required>
+                <label for="registerName">Enter your name</label>
               </div>
             </div>
             <div class="col-12">
               <div class="form-floating">
-                <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                <label for="email">Enter your e-mail</label>
+                <input type="email" class="form-control" id="registerEmail" placeholder="Enter your email" onkeyup="check_email(this.value)" required>
+                <label for="registerEmail">Enter your e-mail</label>
               </div>
             </div>
             <div class="col-12">
               <div class="form-floating">
-                <input type="tel" class="form-control" id="phone" placeholder="Enter your phone">
-                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="registerPhone" placeholder="Enter your phone" onkeypress="return isNumberKey(event)" required>
+                <label for="registerPhone">Phone</label>
               </div>
             </div>
             <div class="col-12">
               <div class="form-floating">
-                <input type="password" class="form-control" id="password" placeholder="Enter password">
-                <label for="password">Password</label>
+                <input type="password" class="form-control" id="registerPassword" placeholder="Enter password" required>
+                <label for="registerPassword">Password</label>
               </div>
             </div>
             <div class="col-12">
               <div class="form-floating">
-                <input type="tel" class="form-control" id="confirmPassword" placeholder="Re-enter your password">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter your password" required>
                 <label for="confirmPassword">Re-enter your password</label>
               </div>
             </div>
             <div class="col-12">
-              <a href="#" class="primary-btn w-100 btn btn-primary">Register</a>
+              <a href="javascript:void(0)" onclick="register()" class="primary-btn w-100 btn btn-primary">Register</a>
             </div>
           </div>
         </form>
@@ -1072,4 +1071,62 @@
   </div>
 </div>
     
-    <?php include ('partials/footer.php'); ?>
+
+<script type="text/javascript">
+    
+    function register(){
+        var name = $('#registerName').val();
+        var email = $('#registerEmail').val();
+        var phone = $('#registerPhone').val();
+        var password = $('#registerPassword').val();
+        var confirmPassword = $('#confirmPassword').val();
+        
+        if(password != confirmPassword){
+            alert('Please re-enter the password, both password should be same.');
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'functions/auth/check_email.php',
+            data: {
+                name:name,
+                email:email,
+                phone:phone,
+                password:password
+            } ,
+            success: function(response){
+                
+            }
+        });
+    }   
+
+
+    function check_email(email){
+        $.ajax({
+            type: 'POST',
+            url: 'functions/auth/check_email.php',
+            data: {
+                email:email,
+            } ,
+            success: function(response){
+                if(response){
+                    alert('This entered email already registered.');
+                    $('#registerEmail').val('');
+                    return;
+                }
+            }
+        });
+    }
+
+
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+
+</script>
+
+
+<?php include ('partials/footer.php'); ?>
