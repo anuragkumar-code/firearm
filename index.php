@@ -157,7 +157,7 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="banner-left">
-                            <h6>Welcome to <span>ARMAMENTS</span></h6>
+                            <h6>Welcome to <span>ARMS SHOPS</span></h6>
                             <h2>Secure Platform<br class="d-none d-md-block">
                                 For Guns</h2>
                             <p>Generate Lorem Ipsum placeholder text. Select the number of
