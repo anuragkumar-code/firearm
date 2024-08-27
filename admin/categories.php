@@ -1,5 +1,45 @@
 <?php include('partials/header.php'); ?>
 
+<?php 
+$add_alert = '';
+
+if(isset($_POST['addCategory'])){
+	$category = $_POST['category'];
+	$status = $_POST['status'];
+
+	$sql = "INSERT INTO `categories`(`name`, `status`) VALUES (?,?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $name, $status);
+
+    if ($stmt->execute()) {
+        $add_alert = "1";
+    } else {
+        $add_alert= "2";
+    }
+
+}
+
+
+$edit_alert = '';
+if(isset($_POST['editCategory'])){
+	$category = $_POST['category'];
+	$status = $_POST['status'];
+
+	$id = $_POST['category_id'];
+
+	$sql = "UPDATE `categories` SET `name`= ?,`status`= ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $name, $status, $id);
+
+    if ($stmt->execute()) {
+        $edit_alert = "1";
+    } else {
+        $edit_alert= "2";
+    }
+}
+
+?>
+
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
@@ -67,5 +107,7 @@
     </div>
   </div>
 </div>
+
+
 
 <?php include('partials/footer.php'); ?>
