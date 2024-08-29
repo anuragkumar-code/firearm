@@ -5,7 +5,7 @@ if (!isset($_SESSION['admin_id'])) {
     header("Location: index.php");
     exit();
 }
-
+$currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -77,10 +77,10 @@ if (!isset($_SESSION['admin_id'])) {
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="dashboard.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="categories.php" class="nav-item nav-link"><i class="fa fa-tag me-2"></i>Categories</a>
-                    <a href="products.php" class="nav-item nav-link"><i class="fa fa-box me-2"></i>Products</a>
-                    <a href="customers.php" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Customers</a>
+                    <a href="dashboard.php" class="nav-item nav-link <?php echo ($currentPage == 'dashboard.php') ? 'active' : ''; ?>"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="categories.php" class="nav-item nav-link <?php echo ($currentPage == 'categories.php') ? 'active' : ''; ?>"><i class="fa fa-tag me-2"></i>Categories</a>
+                    <a href="products.php" class="nav-item nav-link <?php echo ($currentPage == 'products.php') ? 'active' : ''; ?>"><i class="fa fa-box me-2"></i>Products</a>
+                    <a href="customers.php" class="nav-item nav-link <?php echo ($currentPage == 'customers.php') ? 'active' : ''; ?>"><i class="fa fa-users me-2"></i>Customers</a>
                 </div>
             </nav>
         </div>
