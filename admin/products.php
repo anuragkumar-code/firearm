@@ -37,7 +37,8 @@
                         <td><?php echo $row['model']; ?></td>
                         <td><span class=""><?php if($row['status'] == 'A') { echo 'Active'; }else if($row['status'] == 'I'){ echo "Inactive";} ?></span></td>
                         <td>
-                        	<a href="edit-product.php?product='<?php echo base64_encode($row['id']); ?>'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
+                        	<a href="upload-images.php?product=<?php echo base64_encode($row['id']); ?>" class="btn btn-sm btn-secondary"><i class="fa fa-image"></i></a>
+                        	<a href="edit-product.php?product=<?php echo base64_encode($row['id']); ?>" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
                         	<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>

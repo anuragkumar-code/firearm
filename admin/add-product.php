@@ -53,11 +53,6 @@
                             </div>
 
                             <div class="mb-2 col-md-4">
-                                <label for="productImages" class="form-label"><b>Upload Images <span class="text-danger">*</span></b></label>
-                                <input type="file" class="form-control" name="productImages[]" id="productImages" multiple accept="image/*">
-                            </div>
-
-                            <div class="mb-2 col-md-4">
                                 <label for="productShortDesc" class="form-label"><b>Short Description <span class="text-danger">*</span></b></label>
                                 <input required type="text" class="form-control" name="productShortDesc" id="productShortDesc">
                             </div>
@@ -74,11 +69,6 @@
             </div>
         </div>
     </div>
-
-
-<script>
-
-</script>
 
 
 <?php include('partials/footer.php'); ?>
