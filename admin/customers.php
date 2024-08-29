@@ -2,8 +2,7 @@
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">Products</h6>
-                <a href="add-product.php" class="btn btn-primary">+ Product</a>
+                <h6 class="mb-0">Customers</h6>
             </div>
             <div class="table-responsive">
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -11,17 +10,18 @@
                         <tr class="text-dark">
                             <th scope="col">S. No.</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Manufacturer</th>
-                            <th scope="col">Caliber</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Model</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Mobile</th>
+                            <th scope="col">City</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Country</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php 
-					    $query = "SELECT * from products order by id desc";
+					    $query = "SELECT * from users where type = 'C' order by id desc";
 					    $result = $conn->query($query);
 					    $sno = '';
 					    if ($result->num_rows > 0) {
@@ -31,10 +31,11 @@
                     <tr>
                         <td><?php echo $sno; ?></td>
                         <td><?php echo $row['name']; ?></td>
-                        <td><?php echo $row['manufacturer']; ?></td>
-                        <td><?php echo $row['caliber']; ?></td>
-                        <td><?php echo $row['price']; ?></td>
-                        <td><?php echo $row['model']; ?></td>
+                        <td><?php echo $row['email']; ?></td>
+                        <td><?php echo $row['mobile']; ?></td>
+                        <td><?php echo $row['city']; ?></td>
+                        <td><?php echo $row['state']; ?></td>
+                        <td><?php echo $row['country']; ?></td>
                         <td>
                             <div class="main-toggle main-toggle-success <?php if($row['status'] == 'A'){ ?> on <?php }?>" style="border-radius: 22px;" data-id="<?php echo $row['id']; ?>">
 								<span style="border-radius: 22px;"></span>
@@ -42,9 +43,7 @@
 							</div>
                         </td>
                         <td>
-                        	<a href="upload-images.php?product=<?php echo base64_encode($row['id']); ?>" class="btn btn-sm btn-secondary"><i class="fa fa-image"></i></a>
-                        	<a href="edit-product.php?product=<?php echo base64_encode($row['id']); ?>" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>
-                        	<a class="btn btn-sm btn-danger" onclick="deleteProduct(<?php echo $row['id']; ?>)"><i class="fa fa-trash"></i></a>
+                        	<a class="btn btn-sm btn-danger" onclick="deleteCustomer(<?php echo $row['id']; ?>)"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php }} ?>
@@ -56,8 +55,8 @@
 
 
 <script>
-//function to toggle the switch
-$('.main-toggle').on('click', function() {
+    //function to toggle the switch
+	$('.main-toggle').on('click', function() {
 		$(this).toggleClass('on');
 
 		var id = $(this).data('id');
@@ -77,7 +76,7 @@ $('.main-toggle').on('click', function() {
 	function updateStatus(status,id){
 		$.ajax({
 			type: 'POST',
-			url: 'functions/product/update-status.php',
+			url: 'functions/customers/update-status.php',
 			data: {
 				status:status,
 				id:id
@@ -92,17 +91,17 @@ $('.main-toggle').on('click', function() {
 	  	});
 	}
 
-	function deleteProduct(id){
-        if (confirm('Are you sure you want to delete this product?')) {
+    function deleteCustomer(id){
+        if (confirm('Are you sure you want to delete this customer?')) {
             $.ajax({
                 type: 'POST',
-                url: 'functions/product/delete.php',
+                url: 'functions/customers/delete.php',
                 data: {
                     id: id
                 },
                 success: function(result) {
                     if (result == '1') {
-                        alert('Product deleted successfully.');
+                        alert('Customer deleted successfully.');
                         location.reload();
                     } else {
                         alert('Something went wrong! Please contact admin.');

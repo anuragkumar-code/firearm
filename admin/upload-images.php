@@ -116,9 +116,14 @@ while ($imageRow = $imageResult->fetch_assoc()) {
                     <td>
                         <img class="child_img" src="../admin/product_images/<?php echo $row['image']; ?>" alt="Preview" style="width: 100px; height: auto;">
                     </td>
-                    <td><?php echo $row['status']; ?></td>
                     <td>
-                    	<a class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                        <div class="main-toggle main-toggle-success <?php if($row['status'] == 'A'){ ?> on <?php }?>" style="border-radius: 22px;" data-id="<?php echo $row['id']; ?>">
+							<span style="border-radius: 22px;"></span>
+							<input type="hidden" id="statusId_<?php echo $row['id']; ?>" value="<?php echo $row['status']; ?>">
+						</div>
+                    </td>
+                    <td>
+                    	<a class="btn btn-sm btn-danger" onclick="deleteImage(<?php echo $row['id']; ?>)"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 <?php }} ?>
@@ -185,6 +190,63 @@ while ($imageRow = $imageResult->fetch_assoc()) {
             $("#childImages").val(""); 
         });
     });
+
+    //function to toggle the switch
+	$('.main-toggle').on('click', function() {
+		$(this).toggleClass('on');
+
+		var id = $(this).data('id');
+
+	    var hiddenInput = $('#statusId_' + id);
+
+	    if ($(this).hasClass('on')) {
+	        hiddenInput.val('A'); 
+	        updateStatus('I',id)
+	    } else {
+	        hiddenInput.val('I'); 
+	        updateStatus('A',id)
+	    }
+	})
+
+	//fucntion to update the status of coffee
+	function updateStatus(status,id){
+		$.ajax({
+			type: 'POST',
+			url: 'functions/product/update-image-status.php',
+			data: {
+				status:status,
+				id:id
+			},
+			success: function(result){
+				if(result == '1'){
+					console.log("status updated");
+				}else{
+					alert('Something went wrong! Please contact admin.');
+				}
+			}
+	  	});
+	}
+
+
+    function deleteImage(id){
+        if (confirm('Are you sure you want to delete this customer?')) {
+            $.ajax({
+                type: 'POST',
+                url: 'functions/product/delete-image.php',
+                data: {
+                    id: id
+                },
+                success: function(result) {
+                    if (result == '1') {
+                        alert('Customer deleted successfully.');
+                        location.reload();
+                    } else {
+                        alert('Something went wrong! Please contact admin.');
+                    }
+                }
+            });
+        }
+    }
 </script>
 
 <?php include('partials/footer.php'); ?>

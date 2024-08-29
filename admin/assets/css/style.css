@@ -275,3 +275,73 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+
+.main-toggle {
+    width: 50px;
+    height: 23px;
+    background-color: #b4bdce;
+    padding: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-toggle span {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    inset-inline-start: 3px;
+    display: block;
+    width: 17px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.main-toggle span::before,
+.main-toggle span::after {
+    position: absolute;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #fff;
+    top: 2px;
+    line-height: 1.38;
+}
+
+.main-toggle span::before {
+    content: "";
+    inset-inline-start: -25px;
+}
+
+.main-toggle span::after {
+    content: "";
+    inset-inline-end: -29px;
+}
+
+.main-toggle.on {
+    background-color: #304993;
+}
+
+.main-toggle.on span {
+    inset-inline-start: 29px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .main-toggle span {
+        transition: none;
+    }
+}
+
+.main-toggle-secondary.on {
+    background-color: #304993;
+}
+
+.main-toggle-success.on {
+    background-color: #21a544;
+}
+
+.main-toggle-dark.on {
+    background-color: #1c273c;
+}

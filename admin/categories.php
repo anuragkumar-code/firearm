@@ -90,7 +90,12 @@ if (isset($_POST['deleteCategoryId'])) {
                         <tr>
                             <td><?php echo $sno; ?></td>
                             <td><?php echo $row['name']; ?></td>
-                            <td><span class=""><?php if($row['status'] == 'A') { echo 'Active'; }else if($row['status'] == 'I'){ echo "Inactive";} ?></span></td>
+                            <td>
+                              <div class="main-toggle main-toggle-success <?php if($row['status'] == 'A'){ ?> on <?php }?>" style="border-radius: 22px;" data-id="<?php echo $row['id']; ?>">
+							                	<span style="border-radius: 22px;"></span>
+							                	<input type="hidden" id="statusId_<?php echo $row['id']; ?>" value="<?php echo $row['status']; ?>">
+							                </div>
+                            </td>
                             <td>
                             	<a class="btn btn-sm btn-info" onclick="editCategory('<?php echo $row['id']; ?>','<?php echo $row['name']; ?>','<?php echo $row['status']; ?>')"><i class="fa fa-edit"></i></a>
                             	<a class="btn btn-sm btn-danger" onclick="deleteCategory('<?php echo $row['id'] ?>')"><i class="fa fa-trash"></i></a>
@@ -178,6 +183,41 @@ if (isset($_POST['deleteCategoryId'])) {
 
 
 <script>
+  //function to toggle the switch
+$('.main-toggle').on('click', function() {
+		$(this).toggleClass('on');
+
+		var id = $(this).data('id');
+
+	    var hiddenInput = $('#statusId_' + id);
+
+	    if ($(this).hasClass('on')) {
+	        hiddenInput.val('A'); 
+	        updateStatus('I',id)
+	    } else {
+	        hiddenInput.val('I'); 
+	        updateStatus('A',id)
+	    }
+	})
+
+	//fucntion to update the status of coffee
+	function updateStatus(status,id){
+		$.ajax({
+			type: 'POST',
+			url: 'functions/categories/update-status.php',
+			data: {
+				status:status,
+				id:id
+			},
+			success: function(result){
+				if(result == '1'){
+					console.log("status updated");
+				}else{
+					alert('Something went wrong! Please contact admin.');
+				}
+			}
+	  	});
+	}
 
   function editCategory(id,name,status){
     $('#editNameOfCategory').val(name);
@@ -187,14 +227,24 @@ if (isset($_POST['deleteCategoryId'])) {
   }
 
   function deleteCategory(id){
-    if (confirm("Are you sure you want to delete this category?")) {
-      $('<form method="POST">')
-        .append($('<input>').attr('type', 'hidden').attr('name', 'deleteCategoryId').val(id))
-        .appendTo('body')
-        .submit();
+        if (confirm('Are you sure you want to delete this category?')) {
+            $.ajax({
+                type: 'POST',
+                url: 'functions/categories/delete.php',
+                data: {
+                    id: id
+                },
+                success: function(result) {
+                    if (result == '1') {
+                        alert('Category deleted successfully.');
+                        location.reload();
+                    } else {
+                        alert('Something went wrong! Please contact admin.');
+                    }
+                }
+            });
+        }
     }
-
-  }
 </script>
 
 
