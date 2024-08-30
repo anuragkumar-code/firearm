@@ -176,463 +176,48 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                 <div class="guns-wrapper">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="Handguns-tab" data-bs-toggle="tab"
-                                data-bs-target="#Handguns" type="button" role="tab" aria-controls="Handguns"
-                                aria-selected="true">Handguns</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="Rifles-tab" data-bs-toggle="tab" data-bs-target="#Rifles"
-                                type="button" role="tab" aria-controls="Rifles" aria-selected="false">Rifles</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="Shotguns-tab" data-bs-toggle="tab" data-bs-target="#Shotguns"
-                                type="button" role="tab" aria-controls="Shotguns"
-                                aria-selected="false">Shotguns</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="Optics-tab" data-bs-toggle="tab" data-bs-target="#Optics"
-                                type="button" role="tab" aria-controls="Optics" aria-selected="false">Optics</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="Accessories-tab" data-bs-toggle="tab"
-                                data-bs-target="#Accessories" type="button" role="tab" aria-controls="Accessories"
-                                aria-selected="true">Accessories</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="Maintenance-tab" data-bs-toggle="tab"
-                                data-bs-target="#Maintenance" type="button" role="tab" aria-controls="Maintenance"
-                                aria-selected="false">Maintenance</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="Silencers-tab" data-bs-toggle="tab" data-bs-target="#Silencers"
-                                type="button" role="tab" aria-controls="Silencers"
-                                aria-selected="false">Silencers</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="Knives-tab" data-bs-toggle="tab" data-bs-target="#Knives"
-                                type="button" role="tab" aria-controls="Knives" aria-selected="false">Knives</button>
-                        </li>
+                        <?php
+                        $categoriesQuery = "SELECT * from categories where status = 'A'";
+					    $categoriesResult = $conn->query($categoriesQuery);
+                        $firstTabActive = true; 
+                        while($row = $categoriesResult->fetch_assoc()) { ?>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link <?php echo $firstTabActive ? 'active' : ''; ?>" id="<?php echo $row['name']; ?>-tab" data-bs-toggle="tab"
+                                    data-bs-target="#<?php echo $row['name']; ?>" type="button" role="tab" aria-controls="<?php echo $row['name']; ?>"
+                                    aria-selected="true"><?php echo $row['name']; ?></button>
+                            </li>
+                        <?php $firstTabActive = false; } ?>
                     </ul>
                     <!-- Tab panes -->
+                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="Handguns" role="tabpanel"
-                            aria-labelledby="Handguns-tab">
+                    <?php
+                    $categoriesResult->data_seek(0); 
+                    $firstTabContentActive = true; 
+                    while ($category = $categoriesResult->fetch_assoc()) { 
+                        $categoryName = $category['name'];
+                    ?>
+                        <div class="tab-pane fade <?php echo $firstTabContentActive ? 'show active' : ''; ?>" id="<?php echo $categoryName; ?>" role="tabpanel" aria-labelledby="<?php echo $categoryName; ?>-tab">
                             <div class="row g-2 g-sm-3 g-lg-4 justify-content-center">
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-1.png" class="img-fluid" alt="">
+                                <?php
+                                $productsQuery = "SELECT * FROM products WHERE category_id = '{$category['id']}' ORDER BY id DESC LIMIT 5";
+                                $productsResult = $conn->query($productsQuery);
+
+                                while ($product = $productsResult->fetch_assoc()) { ?>
+                                    <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                                        <div class="gun-card">
+                                            <div>
+                                                <img src="admin/product_images/<?php echo $product['master_image']; ?>" class="img-fluid" alt="">
+                                            </div>
+                                            <h6><?php echo $product['name']; ?></h6>
                                         </div>
-                                        <h6>Rimfire (3)</h6>
                                     </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-2.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rifle Style Pistols(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-3.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Revolvers(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-4.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Polymer(2)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-5.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Optic Ready(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-6.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>1911(2)</h6>
-                                    </div>
-                                </div>
+                                <?php } ?>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="Rifles" role="tabpanel" aria-labelledby="Rifles-tab">
-                            <div class="row g-2 g-sm-3 g-lg-4 justify-content-center">
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-1.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rimfire (3)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-2.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rifle Style Pistols(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-3.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Revolvers(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-4.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Polymer(2)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-5.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Optic Ready(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-6.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>1911(2)</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="Shotguns" role="tabpanel" aria-labelledby="Shotguns-tab">
-                            <div class="row g-2 g-sm-3 g-lg-4 justify-content-center">
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-1.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rimfire (3)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-2.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rifle Style Pistols(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-3.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Revolvers(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-4.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Polymer(2)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-5.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Optic Ready(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-6.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>1911(2)</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="Optics" role="tabpanel" aria-labelledby="Optics-tab">
-                            <div class="row g-2 g-sm-3 g-lg-4 justify-content-center">
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-1.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rimfire (3)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-2.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rifle Style Pistols(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-3.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Revolvers(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-4.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Polymer(2)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-5.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Optic Ready(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-6.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>1911(2)</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="Accessories" role="tabpanel" aria-labelledby="Accessories-tab">
-                            <div class="row g-2 g-sm-3 g-lg-4 justify-content-center">
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-1.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rimfire (3)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-2.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rifle Style Pistols(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-3.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Revolvers(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-4.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Polymer(2)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-5.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Optic Ready(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-6.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>1911(2)</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="Maintenance" role="tabpanel" aria-labelledby="Maintenance-tab">
-                            <div class="row g-2 g-sm-3 g-lg-4 justify-content-center">
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-1.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rimfire (3)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-2.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rifle Style Pistols(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-3.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Revolvers(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-4.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Polymer(2)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-5.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Optic Ready(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-6.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>1911(2)</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="Silencers" role="tabpanel" aria-labelledby="Silencers-tab">
-                            <div class="row g-2 g-sm-3 g-lg-4 justify-content-center">
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-1.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rimfire (3)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-2.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rifle Style Pistols(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-3.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Revolvers(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-4.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Polymer(2)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-5.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Optic Ready(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-6.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>1911(2)</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="Knives" role="tabpanel" aria-labelledby="Knives-tab">
-                            <div class="row g-2 g-sm-3 g-lg-4 justify-content-center">
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-1.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rimfire (3)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-2.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Rifle Style Pistols(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-3.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Revolvers(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-4.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Polymer(2)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-5.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>Optic Ready(1)</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                    <div class="gun-card">
-                                        <div>
-                                            <img src="assets/images/gun-6.png" class="img-fluid" alt="">
-                                        </div>
-                                        <h6>1911(2)</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <?php 
+                        $firstTabContentActive = false; 
+                    } ?>
                     </div>
                 </div>
             </div>
@@ -724,183 +309,33 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                     </div>
                 </div>
                 <div class="row justify-content-center gy-3">
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/latest-gun-1.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Lwrc Ic-spr Fde Rifle 223 Rem, 5.56 Nato 32 Rds 14.7″</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
+                    <?php 
+                    $newProductQuery = "SELECT * from products ORDER BY id DESC LIMIT 8";
+                    $newProductResult = $conn->query($newProductQuery);
+                    while($newProductRow = $newProductResult->fetch_assoc()) { ?>
+                        <div class="col-sm-6 col-lg-4 col-xl-3">
+                            <div class="product-card">
+                                <span class="product-badge">NEW</span>
+                                <div class="product-img">
+                                    <img src="admin/product_images/<?php echo $newProductRow['master_image']; ?>" alt="">
+                                </div>
+                                <div class="product-content">
+                                    <h6><?php echo $newProductRow['short_description']; ?></h6>
+                                    <ul class="d-flex align-items-center gap-2">
+                                        <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                        <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                        <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                        <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                        <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
+                                    </ul>
+                                    <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
+                                        <h4 class="d-none">$251.00</h4>
+                                        <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/machine-gun.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Minigun Gatling gun Weapon Machine Gun</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/ak47.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>AK-47 Firearm Assault rifle Weapon, scar, aK47</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/bullets.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Brass bullets, Bullet StG 44 Assault rifle AK-47 Cartridge, Bullets</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <span class="product-badge sale-badge">sale</span>
-                            <div class="product-img">
-                                <img src="assets/images/latest-gun-1.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Black and brown assault rifle, AK-47 AK47 Weapon Automatic firearm, AK-47</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/automatic-ak47.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Black and brown assault rifle, AK-47 AK47 Weapon Automatic firearm, AK-47</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/sniper-weapon.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Dragunov sniper rifle Firearm, Sniper rifle, assault Rifle, Sniper, Weapon</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/latest-gun-1.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Lwrc Ic-spr Fde Rifle 223 Rem, 5.56 Nato 32 Rds 14.7″</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </section>
@@ -1001,7 +436,7 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
         <section class="news inner-gap">
             <div class="container">
                 <div class="title-group text-center">
-                    <h2 class="sub-title">SHOP BY BRANDS</h2>
+                    <h2 class="sub-title">POPULAR BRANDS</h2>
                     <p>Generate Lorem Ipsum placeholder text. Select the number of characters,<br
                             class="d-none d-md-block"> words, sentences or paragraphs, and hit generate!</p>
                 </div>
@@ -1031,11 +466,7 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                             <img src="assets/images/brand-5.png" class="img-fluid" alt="">
                         </div>
                     </div>
-                    <div class="col-6 col-md-4 col-lg-2">
-                        <div class="brand-card">
-                            <img src="assets/images/brand-6.png" class="img-fluid" alt="">
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </section>

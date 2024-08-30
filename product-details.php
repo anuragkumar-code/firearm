@@ -1,4 +1,4 @@
-﻿<?php include('partials/header/php'); ?>
+﻿<?php include('partials/header.php'); ?>
 
     <main id="main-content" class="position-relative">
         <section class="page-title position-relative">

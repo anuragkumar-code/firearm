@@ -22,30 +22,26 @@
                         <li><a href="about.html">About us</a></li>
                         <li><a href="blog.html">Blog</a></li>
                         <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="track-order.html">Track your order</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2 footer-link-wrapper">
                     <h3>INFORMATION</h3>
                     <ul class="footer-link">
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="checkout.html">Check Out</a></li>
                         <li><a href="privacy-policy.html">Privacy Policy</a></li>
                         <li><a href="terms-service.html">Terms Of Service</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-6 col-lg-4 col-xl-3 footer-link-wrapper">
                     <h3>CONTACT INFO</h3>
-                    <p class="mb-3 mb-md-4"><span>Address:</span> 6th Floor, Rexona, Nr Infinity Tower, Opp Param
-                        Doctor House,Lal
-                        Darwaja Station Road, Surat, Gujarat, India, 395003</p>
-                    <p class="mb-3 mb-md-4"><span>Phone:</span> +91 84608 09898</p>
-                    <p><span>E-mail:</span> info@bitrixinfotech.com</p>
+                    <p class="mb-3 mb-md-4"><span>Address:</span> 6th Floor, ABC, Firearm Tower, Opp ABC
+                        House,Qwerty Road, Bangalore, Karnataka, India, 121212</p>
+                    <p class="mb-3 mb-md-4"><span>Phone:</span> +91 98765 98765</p>
+                    <p><span>E-mail:</span> info@firearm.com</p>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <p class="text-white">Copyright © 2024 ARMAMENT Theme By Bitrix</p>
+            <p class="text-white"></p>
             <div class="d-flex align-items-center gap-2 gap-md-3">
                 <a href="javascript:void(0)"><img src="assets/images/google-pay.png" class="img-fluid" alt=""></a>
                 <a href="javascript:void(0)"><img src="assets/images/apple-pay.png" class="img-fluid" alt=""></a>
