@@ -14,7 +14,7 @@
                             <th scope="col">Manufacturer</th>
                             <th scope="col">Caliber</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Model</th>
+                            <th scope ="col">Model</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>

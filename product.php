@@ -31,7 +31,8 @@
                                                     <div class="form-check">
                                                         <input onchange="categoryFilter(1)" class="form-check-input category-checkbox" type="checkbox" 
                                                             value="<?php echo $categoriesRow['id']; ?>" 
-                                                            id="flexCheckDefault_<?php echo $categoriesRow['id']; ?>">
+                                                            id="flexCheckDefault_<?php echo $categoriesRow['id']; ?>" 
+                                                            checked> 
                                                         <label class="form-check-label" for="flexCheckDefault_<?php echo $categoriesRow['id']; ?>">
                                                             <?php echo htmlspecialchars($categoriesRow['name']); ?>
                                                         </label>
@@ -48,13 +49,13 @@
                 </div>
                 <div class="col-lg-8 col-xl-9">
                     <div id="product-list" class="row justify-content-center gy-3">
-                        <!-- Products will be loaded here via AJAX -->
+
                     </div>
 
                     <div class="col-12 mt-4 mt-md-5">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-center gap-2 gap-md-3" id="pagination-links">
-                                <!-- Pagination links will be loaded here via AJAX -->
+
                             </ul>
                         </nav>
                     </div>
@@ -89,14 +90,13 @@
         });
     }
 
-    // Function to handle pagination click
     function goToPage(page) {
         categoryFilter(page);
     }
 
-    $(document).ready(function() {
-        categoryFilter();
-    });
+    setTimeout(()=>{
+        categoryFilter(); 
+    },1000);
 </script>
 
 <?php include('partials/footer.php'); ?>

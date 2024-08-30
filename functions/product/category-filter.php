@@ -46,9 +46,21 @@ while ($productRow = $productsResult->fetch_assoc()) {
 
 $totalPages = ceil($totalProducts / $limit);
 $pagination = '';
+
+// Add "First" button
+if ($page > 1) {
+    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(1)"><</a></li>';
+}
+
+// Generate page numbers
 for ($i = 1; $i <= $totalPages; $i++) {
     $active = $page == $i ? 'active' : '';
     $pagination .= '<li class="page-item"><a class="page-link ' . $active . '" href="javascript:void(0);" onclick="goToPage(' . $i . ')">' . $i . '</a></li>';
+}
+
+// Add "Last" button
+if ($page < $totalPages) {
+    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(' . $totalPages . ')">></a></li>';
 }
 
 echo json_encode(['html' => $html, 'pagination' => $pagination]);
