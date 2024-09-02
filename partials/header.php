@@ -1,16 +1,23 @@
 <?php include('config/db.php'); ?>
+
+<?php 
+session_start();
+
+if($_SESSION['customer_id'] == ''){
+    header('location:index.php');
+} 
+
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
     <title>Armaments - Online Gun Shop HTML template</title>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description"
         content="Welcome to Armaments - your ultimate online destination for top-notch firearms and tactical gear. Explore our vast collection of weaponry, accessories, and expertly crafted gear designed to elevate your shooting experience. With a commitment to quality and customer satisfaction, we're your trusted partner in arming enthusiasts and professionals alike. Browse our inventory today and gear up for your next mission with confidence!">
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
-    <!-- CSS Libraries -->
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
         rel="stylesheet">
@@ -32,12 +39,15 @@
         <div class="container">
             <div class="d-flex align-items-center justify-content-between">
                 <div>
-                    <a class="navbar-brand p-0 d-none d-xl-block" href="index.html">
+                    <a class="navbar-brand p-0 d-none d-xl-block" href="index.php">
                         <img src="assets/images/logo-black.png" alt="logo">
                     </a>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-4">
                     <a href="#"><img src="assets/images/user.svg" alt=""></a>
+                    <a style="color: black;" href="javascript:void(0)">Welcome, <?php echo $_SESSION['customer_name']; ?></a>
+                    <a style="color: black;border-radius:40px" class="btn btn-info" href="functions/auth/logout.php">Logout</a>
+
                 </div>
             </div>
         </div>
@@ -58,9 +68,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="about-us.php">about us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact-us.php">Contact us</a>
                         </li>
                     </ul>
                 </div>

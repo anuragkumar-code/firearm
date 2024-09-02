@@ -58,6 +58,7 @@ if (isset($_POST['updatePassword'])) {
 }
 
 if (isset($_POST['updateAddress'])) {
+    $info_email = $_POST['info_email'];
     $mobile = $_POST['mobile'];
     $addressOne = $_POST['addressOne'];
     $addressTwo = $_POST['addressTwo'];
@@ -66,10 +67,10 @@ if (isset($_POST['updateAddress'])) {
     $country = $_POST['country'];
     $pincode = $_POST['pincode'];
 
-    $updateAddress = "UPDATE `users` SET `mobile`= ? ,`address_one`= ? ,`address_two`= ? ,`city`= ? ,`state`= ? ,`country`= ? ,`pincode`= ?  WHERE id = '1'";
+    $updateAddress = "UPDATE `users` SET `info_email`= ? ,`mobile`= ? ,`address_one`= ? ,`address_two`= ? ,`city`= ? ,`state`= ? ,`country`= ? ,`pincode`= ?  WHERE id = '1'";
 
     $stmt = $conn->prepare($updateAddress);
-    $stmt->bind_param("sssssss",$mobile,$addressOne,$addressTwo,$city,$state,$country,$pincode);
+    $stmt->bind_param("ssssssss",$info_email,$mobile,$addressOne,$addressTwo,$city,$state,$country,$pincode);
     $stmt->execute();
 
     $success_type = 1;
@@ -100,6 +101,7 @@ if(isset($_POST['updateSocial'])){
 
 }
 
+
 $adminQuery = "SELECT * from users where type = 'A'";
 $result = $conn->query($adminQuery);
 $adminData = $result->fetch_assoc();
@@ -118,6 +120,10 @@ $adminData = $result->fetch_assoc();
                     <?php } ?>
                     <form action="" method="post">
                         <div class="row">
+                        <div class="mb-2 col-md-4">
+                                <label for="info_email" class="form-label"><b>Info Email<span class="text-danger">*</span></b></label>
+                                <input required type="text" class="form-control" name="info_email" value="<?php echo $adminData['info_email']; ?>" id="info_email">
+                            </div>
                             <div class="mb-2 col-md-4">
                                 <label for="mobile" class="form-label"><b>Mobile<span class="text-danger">*</span></b></label>
                                 <input required type="text" class="form-control" name="mobile" value="<?php echo $adminData['mobile']; ?>" id="mobile">

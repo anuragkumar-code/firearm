@@ -26,7 +26,12 @@ while ($imageRow = $imageResult->fetch_assoc()) {
                             <label for="productCategory" class="form-label"><b>Category <span class="text-danger">*</span></b></label>
                             <select class="form-select mb-3" name="productCategory" id="productCategory" required>
                                 <option label="Select category"></option>
-                                <option value="1">D</option>
+                                <?php 
+                                    $query = "SELECT * from categories where status = 'A'";
+                                    $result = $conn->query($query);
+                                    while($row = $result->fetch_assoc()){ ?>
+                                        <option <?php if($fetch['category_id'] == $row['id']){ echo "selected"; } ?> value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                         <div class="mb-2 col-md-4">

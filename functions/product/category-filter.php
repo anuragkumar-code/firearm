@@ -21,44 +21,44 @@ $productsResult = $conn->query($productsQuery);
 $html = '';
 while ($productRow = $productsResult->fetch_assoc()) {
     $html .= '<div class="col-sm-6 col-xl-4">';
-    $html .= '    <div class="product-card">';
-    $html .= '        <span class="product-badge">new</span>';
-    $html .= '        <div class="product-img">';
-    $html .= '            <img src="admin/product_images/' . htmlspecialchars($productRow['master_image']) . '" alt="' . htmlspecialchars($productRow['name']) . '">';
-    $html .= '        </div>';
-    $html .= '        <div class="product-content">';
-    $html .= '            <h6>' . htmlspecialchars($productRow['name']) . '</h6>';
-    $html .= '            <ul class="d-flex align-items-center gap-2">';
-    $html .= '                <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';
-    $html .= '                <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';
-    $html .= '                <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';
-    $html .= '                <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';
-    $html .= '                <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>';
-    $html .= '            </ul>';
-    $html .= '            <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">';
-    $html .= '                <h4>$' . htmlspecialchars($productRow['price']) . '</h4>';
-    $html .= '                <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>';
-    $html .= '            </div>';
-    $html .= '        </div>';
-    $html .= '    </div>';
+    $html .= '  <a href="product-details.php?id='.base64_encode($productRow['id']).'">';
+    $html .= '      <div class="product-card">';
+    $html .= '          <span class="product-badge">new</span>';
+    $html .= '          <div class="product-img">';
+    $html .= '              <img src="admin/product_images/' . htmlspecialchars($productRow['master_image']) . '" alt="' . htmlspecialchars($productRow['name']) . '">';
+    $html .= '          </div>';
+    $html .= '          <div class="product-content">';
+    $html .= '              <h6>' . htmlspecialchars($productRow['name']) . '</h6>';
+    $html .= '              <ul class="d-flex align-items-center gap-2">';
+    $html .= '                  <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';
+    $html .= '                  <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';
+    $html .= '                  <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';
+    $html .= '                  <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';
+    $html .= '                  <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>';
+    $html .= '              </ul>';
+    $html .= '              <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">';
+    $html .= '                  <h4>$' . htmlspecialchars($productRow['price']) . '</h4>';
+    $html .= '                  <a href="product-details.php?id='.base64_encode($productRow['id']).'" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>';
+    $html .= '              </div>';
+    $html .= '          </div>';
+    $html .= '      </div>';
+    $html .= '  </a>';
     $html .= '</div>';
+
 }
 
 $totalPages = ceil($totalProducts / $limit);
 $pagination = '';
 
-// Add "First" button
 if ($page > 1) {
     $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(1)"><</a></li>';
 }
 
-// Generate page numbers
 for ($i = 1; $i <= $totalPages; $i++) {
     $active = $page == $i ? 'active' : '';
     $pagination .= '<li class="page-item"><a class="page-link ' . $active . '" href="javascript:void(0);" onclick="goToPage(' . $i . ')">' . $i . '</a></li>';
 }
 
-// Add "Last" button
 if ($page < $totalPages) {
     $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(' . $totalPages . ')">></a></li>';
 }

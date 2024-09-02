@@ -1,15 +1,14 @@
 ﻿<?php 
 session_start();
 include('config/db.php'); 
-
 ?>
 
 <?php 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['login'])) {
     $email = $_POST['loginEmail'];
     $password = md5($_POST['loginPassword']);
 
-    $query = "SELECT * FROM users WHERE email = ? AND type = 'C' AND status = '1'";
+    $query = "SELECT * FROM users WHERE email = ? AND type = 'C' AND status = 'A'";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -29,13 +28,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "No user found with this email!";
     }
 
-    echo "<script>
-            alert('$error');
-            $('#loginPopUp').modal('show');
-          </script>";
+    echo "<script>alert('$error');$('#loginPopUp').modal('show');</script>";
+
+    echo "<script>if ( window.history.replaceState ) {  window.history.replaceState( null, null, window.location.href ); }</script>";
+
 }
 
-echo "<script>if ( window.history.replaceState ) {  window.history.replaceState( null, null, window.location.href ); }</script>";
 
 ?>
 
@@ -83,23 +81,22 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                     </a>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-4">
-                <?php if (isset($_SESSION['customer_id'])){ ?>
-                    <span style="color: white;">
-                        <img src="assets/images/user.svg" alt="">
-                        <a style="color: white;" href="javascript:void(0)">Welcome, <?php echo $_SESSION['customer_name']; ?></a>
-                        /
-                        <a style="color: white;" href="functions/auth/logout.php">Logout</a>
-                    </span>
-                <?php }else{ ?>
-                    <span style="color: white;">
-                        <img src="assets/images/user.svg" alt="">
-                        <a style="color: white;" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginPopUp">Log In </a>
-                        / 
-                        <a style="color: white;" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#registerPopUp">Register</a>
-                    </span>
-                <?php } ?>
-            </div>
-
+                    <?php if (isset($_SESSION['customer_id'])){ ?>
+                        <span style="color: white;">
+                            <img src="assets/images/user.svg" alt="">
+                            <a style="color: white;" href="javascript:void(0)">Welcome, <?php echo $_SESSION['customer_name']; ?></a>
+                            
+                            <a style="color: white;border-radius:40px" class="btn btn-info" href="functions/auth/logout.php">Logout</a>
+                        </span>
+                    <?php }else{ ?>
+                        <span style="color: white;">
+                            <img src="assets/images/user.svg" alt="">
+                            <a style="color: white;" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginPopUp">Log In </a>
+                            / 
+                            <a style="color: white;" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#registerPopUp">Register</a>
+                        </span>
+                    <?php } ?>
+                </div>
             </div>
         </div>
     </div>
@@ -115,13 +112,10 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                             <a class="nav-link active" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="product.php">Shop</a>
+                            <a href="javascript:void(0);" class="nav-link" onclick="handleShopClick();">Shop</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="about-us.php">about us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact-us.php">Contact us</a>
                         </li>
                     </ul>
                 </div>
@@ -205,12 +199,14 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
 
                                 while ($product = $productsResult->fetch_assoc()) { ?>
                                     <div class="col-6 col-sm-4 col-md-3 col-xl-2">
-                                        <div class="gun-card">
-                                            <div>
-                                                <img src="admin/product_images/<?php echo $product['master_image']; ?>" class="img-fluid" alt="">
+                                        <a href="javascript:void(0);" onclick="handleProductClick('<?php echo base64_encode($product['id']); ?>');">
+                                            <div class="gun-card">
+                                                <div>
+                                                    <img src="admin/product_images/<?php echo $product['master_image']; ?>" class="img-fluid" alt="">
+                                                </div>
+                                                <h6><?php echo $product['name']; ?></h6>
                                             </div>
-                                            <h6><?php echo $product['name']; ?></h6>
-                                        </div>
+                                        </a>
                                     </div>
                                 <?php } ?>
                             </div>
@@ -314,26 +310,28 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                     $newProductResult = $conn->query($newProductQuery);
                     while($newProductRow = $newProductResult->fetch_assoc()) { ?>
                         <div class="col-sm-6 col-lg-4 col-xl-3">
-                            <div class="product-card">
-                                <span class="product-badge">NEW</span>
-                                <div class="product-img">
-                                    <img src="admin/product_images/<?php echo $newProductRow['master_image']; ?>" alt="">
-                                </div>
-                                <div class="product-content">
-                                    <h6><?php echo $newProductRow['short_description']; ?></h6>
-                                    <ul class="d-flex align-items-center gap-2">
-                                        <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                        <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                        <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                        <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                        <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                    </ul>
-                                    <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                        <h4 class="d-none">$251.00</h4>
-                                        <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
+                            <a href="javascript:void(0);" onclick="handleProductClick('<?php echo base64_encode($newProductRow['id']); ?>');">
+                                <div class="product-card">
+                                    <span class="product-badge">NEW</span>
+                                    <div class="product-img">
+                                        <img src="admin/product_images/<?php echo $newProductRow['master_image']; ?>" alt="">
+                                    </div>
+                                    <div class="product-content">
+                                        <h6><?php echo $newProductRow['short_description']; ?></h6>
+                                        <ul class="d-flex align-items-center gap-2">
+                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                            <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
+                                        </ul>
+                                        <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
+                                            <h4 class="d-none">$251.00</h4>
+                                            <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     <?php } ?>
                 </div>
@@ -350,86 +348,6 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                         sentences or
                         paragraphs, and hit generate!</p>
                     <a href="#" class="primary-btn">learn more <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </section>
-        <section class="video inner-gap">
-            <div class="container">
-                <div class="title-group text-center">
-                    <h2 class="sub-title">OUR PRODUCT VIDEO</h2>
-                    <p>Generate Lorem Ipsum placeholder text. Select the number of characters, <br
-                            class="d-none d-md-block"> words, sentences or paragraphs, and hit generate!</p>
-                </div>
-                <div class="row justify-content-center gy-3">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="video-card">
-                            <div class="position-relative">
-                                <img src="assets/images/video-1.png" class="w-100" alt="">
-                                <a href="#" class="play-video"><i class="fa-solid fa-play"></i></a>
-                            </div>
-                            <h5>Mossberg 930 Tactical SPX Pistol 13 Gauge 8 RD 18.5″</h5>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="video-card">
-                            <div class="position-relative">
-                                <img src="assets/images/video-2.png" class="w-100" alt="">
-                                <a href="#" class="play-video"><i class="fa-solid fa-play"></i></a>
-                            </div>
-                            <h5>Mossberg 930 Tactical SPX Pistol 13 Gauge 8 RD 18.5″</h5>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="video-card">
-                            <div class="position-relative">
-                                <img src="assets/images/video-3.png" class="w-100" alt="">
-                                <a href="#" class="play-video"><i class="fa-solid fa-play"></i></a>
-                            </div>
-                            <h5>Mossberg 930 Tactical SPX Pistol 13 Gauge 8 RD 18.5″</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-4 mt-xl-5">
-                    <a href="#" class="primary-btn">SUBSCRIBE NOW <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
-        </section>
-        <section class="testimonial inner-gap">
-            <div class="container">
-                <div class="text-center mb-4">
-                    <h2 class="sub-title text-white">TESTIMONIALS</h2>
-                </div>
-                <div>
-                    <div class="swiper testimonial-swiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="testimonial-card">
-                                    <p>I can't express enough how much I adore VOLD Fashion. From their exquisite
-                                        clothing designs to their outstanding customer service, VOLD has truly become my
-                                        go-to brand for all things fashion</p>
-                                    <div class="testimonial-avatar">
-                                        <img src="assets/images/testimonial-avatar.png" alt="">
-                                    </div>
-                                    <h4 class="section-title d-block mb-1">ENZO NICHOLAS</h4>
-                                    <h6 class="section-title d-block text-white"> Fashion Designer</h6>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="testimonial-card">
-                                    <p>I can't express enough how much I adore VOLD Fashion. From their exquisite
-                                        clothing designs to their outstanding customer service, VOLD has truly become my
-                                        go-to brand for all things fashion</p>
-                                    <div class="testimonial-avatar">
-                                        <img src="assets/images/testimonial-avatar.png" alt="">
-                                    </div>
-                                    <h4 class="section-title d-block mb-1">ENZO NICHOLAS</h4>
-                                    <h6 class="section-title d-block text-white"> Fashion Designer</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -498,7 +416,7 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                 </div>
                 <div class="col-6">
                     <div class="form-floating">
-                        <input type="email" class="form-control" name="registerEmail" id="registerEmail" placeholder="Enter your email" onkeyup="check_email(this.value)" required>
+                        <input type="email" class="form-control" name="registerEmail" id="registerEmail" placeholder="Enter your email"  required>
                         <label for="registerEmail">Enter your e-mail</label>
                     </div>
                 </div>
@@ -560,6 +478,11 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
                 </div>
             </div>
             <div class="col-12">
+                <div class="form-floating">
+                    <span><b>Already registered with us ? <a href="javascript:void(0)" onclick="showLogin()">Login Now</a></b></span>
+                </div>
+            </div>
+            <div class="col-12">
               <a href="javascript:void(0)" onclick="register()" class="primary-btn w-100 btn btn-primary">Register</a>
             </div>
           </div>
@@ -601,6 +524,11 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
               </div>
             </div>
             <div class="col-12">
+                <div class="form-floating">
+                    <span><b>Haven't registered yet? <a href="javascript:void(0)" onclick="showRegister()">Register Now</a></b></span>
+                </div>
+            </div>
+            <div class="col-12">
               <button name="login" type="submit" class="primary-btn w-100 btn btn-primary">Log In</button>
             </div>
           </div>
@@ -612,7 +540,32 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
     
 
 <script type="text/javascript">
-    
+    function showLogin(){
+        $('#registerPopUp').modal('hide');
+        $('#loginPopUp').modal('show');
+
+    }
+    function showRegister(){
+        $('#loginPopUp').modal('hide');
+        $('#registerPopUp').modal('show');
+    }
+
+
+    function handleShopClick(){
+        <?php if (isset($_SESSION['customer_id'])) { ?>
+            window.location.href = "product.php";
+        <?php } else { ?>
+            $('#loginPopUp').modal('show');
+        <?php } ?>
+    }
+
+    function handleProductClick(productId) {
+        <?php if (isset($_SESSION['customer_id'])) { ?>
+            window.location.href = "product-details.php?id=" + productId;
+        <?php } else { ?>
+            $('#loginPopUp').modal('show');
+        <?php } ?>
+    }
     
     
     function register(){
@@ -663,7 +616,7 @@ echo "<script>if ( window.history.replaceState ) {  window.history.replaceState(
     }   
 
 
-    function check_email(email){
+    function check_emdail(email){
         $.ajax({
             type: 'POST',
             url: 'functions/auth/check_email.php',

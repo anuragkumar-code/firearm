@@ -1,11 +1,19 @@
-﻿<?php include('partials/header.php'); ?>
+﻿<?php 
+include('partials/header.php'); 
 
+$get_id = base64_decode($_GET['id']);
+
+$productQuery = "SELECT * from products where id='$get_id'";
+$result = $conn->query($productQuery);
+$productData = $result->fetch_assoc();
+
+?>
     <main id="main-content" class="position-relative">
         <section class="page-title position-relative">
             <div class="container">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">PRODUCT DETAILS</li>
                     </ol>
                 </nav>
@@ -19,24 +27,15 @@
                             <div class="col-sm-3 order-1 order-sm-0">
                                 <div class="swiper gallery-thumbs">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-1.png" class="mix-blend-darken" alt="">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-2.png" class="mix-blend-darken" alt="">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-3.png" class="mix-blend-darken" alt="">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-4.png" class="mix-blend-darken" alt="">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-5.png" class="mix-blend-darken" alt="">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-6.png" class="mix-blend-darken" alt="">
-                                        </div>
+                                        <?php 
+                                        $productImageQuery = "SELECT * from products_images where status = 'A' AND product_id='$get_id'";
+                                        $resultImage = $conn->query($productImageQuery);
+                                        while($productImageData = $resultImage->fetch_assoc()){
+                                        ?>
+                                            <div class="swiper-slide">
+                                                <img src="admin/product_images/<?php echo $productImageData['image']; ?>" class="mix-blend-darken" alt="">
+                                            </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -90,10 +89,10 @@
                                     <li class="entry number" id="p_quantity">1</li>
                                     <li class="entry number-plus"><i class="fas fa-plus"></i></li>
                                 </ul>
-                                <a href="cart.html" class="primary-btn">ADD TO CART</a>
+                                <a href="javascript:void(0)" onclick="showRequestPopup()" class="primary-btn">Send Request</a>
                             </div>
                             <div class="w-100 d-flex flex-column flex-sm-row align-items-center gap-2 gap-sm-3">
-                                <button class="wishlist-btn btn d-flex align-items-center gap-3"><img
+                                <button class="d-none wishlist-btn btn d-flex align-items-center gap-3"><img
                                         src="assets/images/heart.svg" alt="">Add Wishlist</button>
                                 <div class="d-flex flex-wrap align-items-center gap-2 gap-md-3">
                                     <a href="javascript:void(0)"><img src="assets/images/google-pay.png"
@@ -112,7 +111,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 mt-4 pt-5">
+                    <div class="col-12 mt-4 pt-5 mb-5">
                         <div class="product-description-wrapper">
                             <div class="nav nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
@@ -444,207 +443,83 @@
                 </div>
             </div>
         </section>
-        <section class="product inner-gap">
-            <div class="container">
-                <div class="title-group text-center">
-                    <h2 class="sub-title">RELATED PRODUCTS</h2>
-                    <p>Generate Lorem Ipsum placeholder text. Select the number of characters, <br
-                            class="d-none d-md-block"> words, sentences or paragraphs, and hit generate!</p>
-                </div>
-                <div class="product-action-wrapper d-flex flex-column flex-sm-row align-items-center gap-3 gap-xl-5">
-                    <ul class="product-nav d-flex align-items-center flex-shrink-0">
-                        <li><a href="#" class="product-link active">LATEST</a></li>
-                        <li><a href="#" class="product-link">SALE OFF</a></li>
-                        <li><a href="#" class="product-link">BEST SALE</a></li>
-                    </ul>
-                    <div class="border-top w-100">
-                    </div>
-                    <div class="product-arrow d-flex align-items-center flex-shrink-0 gap-1 gap-md-3">
-                        <a href="#"><img src="assets/images/left-arrow.png" alt=""></a>
-                        <a href="#"><img src="assets/images/right-arrow.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="row justify-content-center gy-3">
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/latest-gun-1.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Lwrc Ic-spr Fde Rifle 223 Rem, 5.56 Nato 32 Rds 14.7″</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/machine-gun.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Minigun Gatling gun Weapon Machine Gun</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/ak47.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>AK-47 Firearm Assault rifle Weapon, scar, aK47</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/bullets.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Brass bullets, Bullet StG 44 Assault rifle AK-47 Cartridge, Bullets</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <span class="product-badge sale-badge">sale</span>
-                            <div class="product-img">
-                                <img src="assets/images/latest-gun-1.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Black and brown assault rifle, AK-47 AK47 Weapon Automatic firearm, AK-47</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/automatic-ak47.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Black and brown assault rifle, AK-47 AK47 Weapon Automatic firearm, AK-47</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/sniper-weapon.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Dragunov sniper rifle Firearm, Sniper rifle, assault Rifle, Sniper, Weapon</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <div class="product-card">
-                            <span class="product-badge">new</span>
-                            <div class="product-img">
-                                <img src="assets/images/latest-gun-1.png" alt="">
-                            </div>
-                            <div class="product-content">
-                                <h6>Lwrc Ic-spr Fde Rifle 223 Rem, 5.56 Nato 32 Rds 14.7″</h6>
-                                <ul class="d-flex align-items-center gap-2">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                </ul>
-                                <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                    <h4>$251.00</h4>
-                                    <a href="#" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
     
+
+<div class="modal fade" id="requestPopup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send Request</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <?php if (isset($error)){ ?>
+			<div class="alert alert-danger mg-b-0" role="alert">
+				<button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button">
+					<span aria-hidden="true">×</span>
+				</button>
+				<strong><?php echo $error; ?></strong>
+			</div>
+		<?php } ?>
+        <form method="POST">
+          <div class="row gy-3 gy-sm-4">
+            <div class="col-12">
+              <div class="form-floating">
+                <textarea class="form-control" name="requestMsg" id="requestMsg" placeholder="Enter your message"></textarea>
+                <label for="request">Enter your request message</label>
+              </div>
+            </div>
+
+            <div class="col-12" style="margin-top: 5px!important;">
+                <div class="form-floating">
+                    <span>Please enter short request message to the admin.</span>
+                </div>
+            </div>
+            <div class="col-12">
+              <a href="javascript:void(0)" onclick="sendRequest()" class="primary-btn w-100 btn btn-primary">Send</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <script>
+
+        function sendRequest(){
+
+            var quantity = $('#p_quantity').html();
+            var message = $('#requestMsg').val();
+            
+            $.ajax({
+                type: 'POST',
+                url: 'functions/product/send-request.php',
+                data: {
+                    quantity:quantity,
+                    message:message,
+                    customer:<?php echo $_SESSION['customer_id']; ?>,
+                    product:<?php echo $get_id; ?>,
+                } ,
+                success: function(response){
+                    if(response == true){
+                        alert('Request send to the admin. Admin will contact you soon.');
+                        location.reload();
+                    }else{
+                        alert('Error sending request. Please try after sometime.');
+                        location.reload();
+
+                    }
+                }
+            });
+
+        }
+
+
+        function showRequestPopup(){
+            $('#requestPopup').modal('show');
+        }
+
+    </script>
 <?php include('partials/footer.php'); ?>
