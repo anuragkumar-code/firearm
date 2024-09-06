@@ -3,9 +3,26 @@ include('partials/header.php');
 
 $get_id = base64_decode($_GET['id']);
 
+$imageArr = array();
+$relatedArr = array();
+
 $productQuery = "SELECT * from products where id='$get_id'";
 $result = $conn->query($productQuery);
 $productData = $result->fetch_assoc();
+
+$categoryFetch = $productData['category_id'];
+$relatedProducts = "SELECT * from products where category_id = '$categoryFetch' AND status = 'A' AND id != '$get_id' LIMIT 4";
+$resultRelatedProducts = $conn->query($relatedProducts);
+while($relatedData = $resultRelatedProducts->fetch_assoc()){
+    $relatedArr[] = $relatedData;
+}
+
+$productImageQuery = "SELECT * from products_images where status = 'A' AND product_id='$get_id'";
+$resultImage = $conn->query($productImageQuery);
+while($productImageData = $resultImage->fetch_assoc()){
+    $imageArr[] = $productImageData['image'];
+}
+// echo "<pre>"; print_r($imageArr);exit;
 
 ?>
     <main id="main-content" class="position-relative">
@@ -27,13 +44,12 @@ $productData = $result->fetch_assoc();
                             <div class="col-sm-3 order-1 order-sm-0">
                                 <div class="swiper gallery-thumbs">
                                     <div class="swiper-wrapper">
-                                        <?php 
-                                        $productImageQuery = "SELECT * from products_images where status = 'A' AND product_id='$get_id'";
-                                        $resultImage = $conn->query($productImageQuery);
-                                        while($productImageData = $resultImage->fetch_assoc()){
-                                        ?>
+                                        <div class="swiper-slide">
+                                            <img src="admin/product_images/<?php echo $productData['master_image']; ?>" class="mix-blend-darken" alt="">
+                                        </div>
+                                        <?php foreach ($imageArr as $key => $value) { ?>
                                             <div class="swiper-slide">
-                                                <img src="admin/product_images/<?php echo $productImageData['image']; ?>" class="mix-blend-darken" alt="">
+                                                <img src="admin/product_images/<?php echo $value; ?>" class="mix-blend-darken" alt="">
                                             </div>
                                         <?php } ?>
                                     </div>
@@ -43,23 +59,13 @@ $productData = $result->fetch_assoc();
                                 <div class="swiper gallery-slider">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-1.png" class="mix-blend-darken" alt="">
+                                            <img src="admin/product_images/<?php echo $productData['master_image']; ?>" class="mix-blend-darken" alt="">
                                         </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-2.png" class="mix-blend-darken" alt="">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-3.png" class="mix-blend-darken" alt="">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-4.png" class="mix-blend-darken" alt="">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-5.png" class="mix-blend-darken" alt="">
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <img src="assets/images/latest-gun-6.png" class="mix-blend-darken" alt="">
-                                        </div>
+                                        <?php foreach ($imageArr as $key => $value) { ?>
+                                            <div class="swiper-slide">
+                                                <img src="admin/product_images/<?php echo $value; ?>" class="mix-blend-darken" alt="">
+                                            </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -67,8 +73,8 @@ $productData = $result->fetch_assoc();
                     </div>
                     <div class="col-lg-6">
                         <div class="d-flex flex-column align-items-start gap-3">
-                            <h2 class="product-title">Daniel Defense DDM4 V5 Rifle 223 Rem, 5.56 NATO 32</h2>
-                            <h5 class="order-id">Order ID : <span>#123456789</span></h5>
+                            <h2 class="product-title"><?php echo $productData['name']; ?></h2>
+                            <h5 class="order-id"><?php echo $productData['short_description']; ?></h5>
                             <div class="d-flex align-items-center gap-3">
                                 <ul class="d-flex align-items-center gap-1">
                                     <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
@@ -79,10 +85,8 @@ $productData = $result->fetch_assoc();
                                 </ul>
                                 <h6 class="product-rating">5.0 (100 Review)</h6>
                             </div>
-                            <p class="product-description">We grudge no expense to ensure your comfort and safety on our
-                                shooting range. Our five galleries equaling 20 lanes are outfitted with the best
-                                equipment available.</p>
-                            <h2 class="product-price">price : <span>$125.00</span></h2>
+                            <p class="product-description"><?php  echo $productData['long_description']; ?></p>
+                            <h2 class="product-price"><span>$<?php echo $productData['price']; ?></span></h2>
                             <div class="d-flex gap-3">
                                 <ul class="quantity-selector">
                                     <li class="entry number-minus"><i class="fas fa-minus"></i></li>
@@ -116,330 +120,134 @@ $productData = $result->fetch_assoc();
                             <div class="nav nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                                 <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
-                                    aria-selected="true">DESCRIPTION</button>
+                                    aria-selected="true">PRODUCT PARAMETERS</button>
                                 <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-profile" type="button" role="tab"
-                                    aria-controls="v-pills-profile" aria-selected="false">PRODUCT DESCRIPTION</button>
-                                <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-messages" type="button" role="tab"
-                                    aria-controls="v-pills-messages" aria-selected="false">REVIEW</button>
+                                    data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
+                                    aria-selected="false">DESCRIPTION</button>
                             </div>
+
                             <div class="tab-content" id="v-pills-tabContent">
                                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                                     aria-labelledby="v-pills-home-tab" tabindex="0">
-                                    <p>Tortor non reiciendis varius in, sed donec quis id fermentum, nibh quam id in
-                                        hendrerit fusce eleifend. Aliquam eleifend et dapibus quo, consectetuer
-                                        fermentum pulvinar, wisi maecenas tincidunt arcu. Soluta odio nec est
-                                        consectetuer. Morbi in sed, libero eu duis velit arcu sed, ut cursus. Vitae
-                                        fermentum turpis, erat platea, nunc tincidunt aliquet ornare accumsan, convallis
-                                        tortor bibendum vel pellentesque ac arcu. Interdum ipsum tortor blandit vel
-                                        magna phasellus, quis cras in lorem auctor, felis dolor donec quis suspendisse
-                                        duis nonummy. Non sed feugiat nulla ac viverra in, in diam etiam mauris, conubia
-                                        mi quis cras a suspendisse justo, rutrum vitae in senectus. Maiores sapien sed,
-                                        ante id risus placerat quis quam. Non suspendisse ut felis erat, eu laoreet,
-                                        vitae fames dolor et et vulputate posuere, suscipit elit euismod ac, nonummy in
-                                        quam.</p>
-                                </div>
-                                <div class="tab-pane fade product-description-content" id="v-pills-profile"
-                                    role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
-                                    <h5>Children below the age of 10 are not allowed. All minors must attend while being
-                                        accompanied by a parent or legal guardian who will sign all documents and stay
-                                        with them at all times.</h5>
-                                    <h6>DOES SALT KICK LIKE A TRADITIONAL FIREARM WHEN YOU SHOOT IT?</h6>
-                                    <p> No it doesn’t! One of our main goals when we began redesigning the
-                                        traditional firearm was to make it easy to use (not scary) for everyone.
-                                        That’s why we replaced gun powder with compressed air. Now you get the right
-                                        amount of power with none of the kick.</p>
-                                    <h6>HOW MANY ROUNDS CAN SALT FIRE CONSECUTIVELY?</h6>
-                                    <p>Salt uses a magazine that holds 7 rounds which you can fire consecutively, and
-                                        each CO2 cylinder allows for 21 shots.</p>
-                                    <h6>HOW FAST DOES A SALT ROUND TRAVEL?</h6>
-                                    <p>A Salt round travels at 320 feet per second (fps), which has the same kinetic
-                                        energy as being hit by a 50mph fastball.</p>
-                                    <h6>HOW FAR CAN I ACCURATELY SHOOT SALT?</h6>
-                                    <p>Salt uses a magazine that holds 7 rounds which you can fire consecutively, and
-                                        each CO2 cylinder allows for 21 shots.</p>
-                                    <h6>HOW MANY ROUNDS CAN SALT FIRE CONSECUTIVELY?</h6>
-                                    <p>Salt is accurate and effective up to 150-200 feet, which is 15-20 TIMES further
-                                        than traditional pepper sprays or taser</p>
-                                    <h6>WHAT IS THE GUN MADE OF?</h6>
-                                    <p>A combination of steel, aluminum and plastic.</p>
-                                    <a href="#" class="primary-btn">READ ALL <i class="fa-solid fa-arrow-right"></i></a>
-                                </div>
-                                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
-                                    aria-labelledby="v-pills-messages-tab" tabindex="0">
-                                    <div class="pro-tab-info pro-information rating-information">
-                                        <h4 class="fw-bold mb-3">Reviews & Ratings</h4>
-                                        <p class="mb-4 mb-xl-5">iBELL M200-105 IGBT Inverter 2 in 1 Flux Core/Solid Wire
-                                            MAG Welding Machine
-                                            with 1 Year Warranty</p>
-                                        <div class="row align-items-center review-statistic">
-                                            <div class="col-md-3 mb-10">
-                                                <div class="review-left">
-                                                    <h5>4.6</h5>
-                                                    <span><i class="fas fa-star"></i></span>
-                                                    <p>Average Rating based on 7ratings and 7 reviews</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-7">
-                                                <div class="review-right">
-                                                    <div class="review-progressbar">
-                                                        <span>5</span>
-                                                        <div class="progress" role="progressbar"
-                                                            aria-label="Basic example" aria-valuenow="100"
-                                                            aria-valuemin="0" aria-valuemax="100">
-                                                            <div class="progress-bar" style="width: 100%"></div>
-                                                        </div>
-                                                        <span>(23)</span>
-                                                    </div>
-                                                    <div class="review-progressbar">
-                                                        <span>4</span>
-                                                        <div class="progress" role="progressbar"
-                                                            aria-label="Basic example" aria-valuenow="80"
-                                                            aria-valuemin="0" aria-valuemax="80">
-                                                            <div class="progress-bar" style="width: 80%"></div>
-                                                        </div>
-                                                        <span>(23)</span>
-                                                    </div>
-                                                    <div class="review-progressbar">
-                                                        <span>3</span>
-                                                        <div class="progress" role="progressbar"
-                                                            aria-label="Basic example" aria-valuenow="60"
-                                                            aria-valuemin="0" aria-valuemax="60">
-                                                            <div class="progress-bar" style="width: 60%"></div>
-                                                        </div>
-                                                        <span>(0)</span>
-                                                    </div>
-                                                    <div class="review-progressbar">
-                                                        <span>2</span>
-                                                        <div class="progress" role="progressbar"
-                                                            aria-label="Basic example" aria-valuenow="80"
-                                                            aria-valuemin="0" aria-valuemax="80">
-                                                            <div class="progress-bar" style="width: 80%"></div>
-                                                        </div>
-                                                        <span>(0)</span>
-                                                    </div>
-                                                    <div class="review-progressbar">
-                                                        <span>1</span>
-                                                        <div class="progress" role="progressbar"
-                                                            aria-label="Basic example" aria-valuenow="10"
-                                                            aria-valuemin="0" aria-valuemax="10">
-                                                            <div class="progress-bar" style="width: 10%"></div>
-                                                        </div>
-                                                        <span>(0)</span>
-                                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fa-solid fa-industry fa-2x me-3"></i>
+                                                <div>
+                                                    <h5><b>Manufacturer</b></h5>
+                                                    <p class="mb-0"><?php echo $productData['manufacturer']; ?></p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <h4 class="fw-bold mb-4">ADD REVIEW</h4>
-                                            <form action="#">
-                                                <div class="row gy-3 gy-md-4">
-                                                    <div class="col-md-6">
-                                                        <div class="row gy-3 gy-md-4">
-                                                            <div class="col-12">
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Name*">
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <input type="text" class="form-control"
-                                                                    placeholder="Email*">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="h-100">
-                                                            <textarea class="form-control h-100"
-                                                                placeholder="Your Review*"></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <button class="primary-btn">ADD REVIEW</button>
-                                                    </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fa-solid fa-cogs fa-2x me-3"></i>
+                                                <div>
+                                                    <h5><b>Model</b></h5>
+                                                    <p class="mb-0"><?php echo $productData['model']; ?></p>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
-                                        <div class="review-list">
-                                            <div class="review-card">
-                                                <div class="review-card-in d-flex align-items-baseline gap-1 gap-sm-3">
-                                                    <div class="reviewer-avatar">
-                                                        <img src="assets/images/reviewer-avatar.png" alt="">
-                                                    </div>
-                                                    <div>
-                                                        <div
-                                                            class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-2">
-                                                            <div class="review-title">
-                                                                <h4 class="mb-2">Mamta</h4>
-                                                                <span>November 16, 2022</span>
-                                                            </div>
-                                                            <div class="d-flex gap-2">
-                                                                <button class="action-btn like-btn">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                        height="20" viewBox="0 0 20 20" fill="none">
-                                                                        <path
-                                                                            d="M16.8915 13.5541L17.4794 10.1543C17.6263 9.30519 16.9732 8.52852 16.1124 8.52852H11.7949C11.3669 8.52852 11.0411 8.14442 11.1103 7.72167L11.6626 4.3512C11.7523 3.80364 11.7267 3.24335 11.5873 2.70629C11.4719 2.26139 11.1287 1.90415 10.6773 1.75912L10.5564 1.72032C10.2836 1.63267 9.98584 1.65307 9.72861 1.77701C9.44549 1.91345 9.23836 2.1623 9.16158 2.45826L8.76516 3.98647C8.63903 4.47271 8.4553 4.94206 8.21841 5.38553C7.87228 6.0335 7.33713 6.55207 6.78085 7.03143L5.5819 8.06459C5.24385 8.3559 5.06632 8.79215 5.10479 9.23702L5.78159 17.0642C5.84367 17.7822 6.44392 18.3334 7.16374 18.3334H11.0376C13.9387 18.3334 16.4145 16.312 16.8915 13.5541Z"
-                                                                            fill="#FFB82E"></path>
-                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                            d="M2.47305 7.90422C2.80744 7.88979 3.09384 8.14134 3.12268 8.47479L3.93234 17.8386C3.98435 18.4401 3.51057 18.9585 2.90559 18.9585C2.33574 18.9585 1.875 18.4962 1.875 17.9274V8.52864C1.875 8.19394 2.13867 7.91865 2.47305 7.90422Z"
-                                                                            fill="#FFB82E"></path>
-                                                                    </svg>
-                                                                    <span>1</span>
-                                                                </button>
-                                                                <button class="action-btn dislike-btn">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                        height="20" viewBox="0 0 20 20" fill="none">
-                                                                        <path
-                                                                            d="M16.8915 13.5541L17.4794 10.1543C17.6263 9.30519 16.9732 8.52852 16.1124 8.52852H11.7949C11.3669 8.52852 11.0411 8.14442 11.1103 7.72167L11.6626 4.3512C11.7523 3.80364 11.7267 3.24335 11.5873 2.70629C11.4719 2.26139 11.1287 1.90415 10.6773 1.75912L10.5564 1.72032C10.2836 1.63267 9.98584 1.65307 9.72861 1.77701C9.44549 1.91345 9.23836 2.1623 9.16158 2.45826L8.76516 3.98647C8.63903 4.47271 8.4553 4.94206 8.21841 5.38553C7.87228 6.0335 7.33713 6.55207 6.78085 7.03143L5.5819 8.06459C5.24385 8.3559 5.06632 8.79215 5.10479 9.23702L5.78159 17.0642C5.84367 17.7822 6.44392 18.3334 7.16374 18.3334H11.0376C13.9387 18.3334 16.4145 16.312 16.8915 13.5541Z"
-                                                                            fill="#686868"></path>
-                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                            d="M2.47305 7.90422C2.80744 7.88979 3.09384 8.14134 3.12268 8.47479L3.93234 17.8386C3.98435 18.4401 3.51057 18.9585 2.90559 18.9585C2.33574 18.9585 1.875 18.4962 1.875 17.9274V8.52864C1.875 8.19394 2.13867 7.91865 2.47305 7.90422Z"
-                                                                            fill="#686868"></path>
-                                                                    </svg>
-                                                                    <span>1</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex mb-3 mb-md-4 review-star-wrapper gap-2">
-                                                            <span class="review-star two-start">
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                            </span>
-                                                            <p class="mb-0">Verified Purchase</p>
-                                                        </div>
-                                                        <h5>Ibell tig welding machine is good for the price</h5>
-                                                        <p class="mb-0">dryCELL: PUMA's designation for moisture-wicking
-                                                            properties that help
-                                                            keep you dry and comfortable, Flatlock Stitching: PUMA's
-                                                            solution
-                                                            for less friction and higher comfort</p>
-                                                    </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fa-solid fa-bullseye fa-2x me-3"></i>
+                                                <div>
+                                                    <h5><b>Caliber</b></h5>
+                                                    <p class="mb-0"><?php echo $productData['caliber']; ?></p>
                                                 </div>
                                             </div>
-                                            <div class="review-card">
-                                                <div class="review-card-in d-flex align-items-baseline gap-1 gap-sm-3">
-                                                    <div class="reviewer-avatar">
-                                                        <img src="assets/images/reviewer-avatar.png" alt="">
-                                                    </div>
-                                                    <div>
-                                                        <div
-                                                            class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-2">
-                                                            <div class="review-title">
-                                                                <h4 class="mb-2">Ombir Singh</h4>
-                                                                <span>November 16, 2022</span>
-                                                            </div>
-                                                            <div class="d-flex gap-2">
-                                                                <button class="action-btn like-btn">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                        height="20" viewBox="0 0 20 20" fill="none">
-                                                                        <path
-                                                                            d="M16.8915 13.5541L17.4794 10.1543C17.6263 9.30519 16.9732 8.52852 16.1124 8.52852H11.7949C11.3669 8.52852 11.0411 8.14442 11.1103 7.72167L11.6626 4.3512C11.7523 3.80364 11.7267 3.24335 11.5873 2.70629C11.4719 2.26139 11.1287 1.90415 10.6773 1.75912L10.5564 1.72032C10.2836 1.63267 9.98584 1.65307 9.72861 1.77701C9.44549 1.91345 9.23836 2.1623 9.16158 2.45826L8.76516 3.98647C8.63903 4.47271 8.4553 4.94206 8.21841 5.38553C7.87228 6.0335 7.33713 6.55207 6.78085 7.03143L5.5819 8.06459C5.24385 8.3559 5.06632 8.79215 5.10479 9.23702L5.78159 17.0642C5.84367 17.7822 6.44392 18.3334 7.16374 18.3334H11.0376C13.9387 18.3334 16.4145 16.312 16.8915 13.5541Z"
-                                                                            fill="#FFB82E"></path>
-                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                            d="M2.47305 7.90422C2.80744 7.88979 3.09384 8.14134 3.12268 8.47479L3.93234 17.8386C3.98435 18.4401 3.51057 18.9585 2.90559 18.9585C2.33574 18.9585 1.875 18.4962 1.875 17.9274V8.52864C1.875 8.19394 2.13867 7.91865 2.47305 7.90422Z"
-                                                                            fill="#FFB82E"></path>
-                                                                    </svg>
-                                                                    <span>1</span>
-                                                                </button>
-                                                                <button class="action-btn dislike-btn">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                        height="20" viewBox="0 0 20 20" fill="none">
-                                                                        <path
-                                                                            d="M16.8915 13.5541L17.4794 10.1543C17.6263 9.30519 16.9732 8.52852 16.1124 8.52852H11.7949C11.3669 8.52852 11.0411 8.14442 11.1103 7.72167L11.6626 4.3512C11.7523 3.80364 11.7267 3.24335 11.5873 2.70629C11.4719 2.26139 11.1287 1.90415 10.6773 1.75912L10.5564 1.72032C10.2836 1.63267 9.98584 1.65307 9.72861 1.77701C9.44549 1.91345 9.23836 2.1623 9.16158 2.45826L8.76516 3.98647C8.63903 4.47271 8.4553 4.94206 8.21841 5.38553C7.87228 6.0335 7.33713 6.55207 6.78085 7.03143L5.5819 8.06459C5.24385 8.3559 5.06632 8.79215 5.10479 9.23702L5.78159 17.0642C5.84367 17.7822 6.44392 18.3334 7.16374 18.3334H11.0376C13.9387 18.3334 16.4145 16.312 16.8915 13.5541Z"
-                                                                            fill="#686868"></path>
-                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                            d="M2.47305 7.90422C2.80744 7.88979 3.09384 8.14134 3.12268 8.47479L3.93234 17.8386C3.98435 18.4401 3.51057 18.9585 2.90559 18.9585C2.33574 18.9585 1.875 18.4962 1.875 17.9274V8.52864C1.875 8.19394 2.13867 7.91865 2.47305 7.90422Z"
-                                                                            fill="#686868"></path>
-                                                                    </svg>
-                                                                    <span>1</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex mb-3 mb-md-4 review-star-wrapper gap-2">
-                                                            <span class="review-star five-start">
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                            </span>
-                                                            <p class="mb-0">Verified Purchase</p>
-                                                        </div>
-                                                        <h5>Ibell tig welding machine is good for the price</h5>
-                                                        <p class="mb-0">dryCELL: PUMA's designation for moisture-wicking
-                                                            properties that help
-                                                            keep you dry and comfortable, Flatlock Stitching: PUMA's
-                                                            solution
-                                                            for less friction and higher comfort</p>
-                                                    </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fa-solid fa-ruler fa-2x me-3"></i>
+                                                <div>
+                                                    <h5><b>Product Range</b></h5>
+                                                    <p class="mb-0"><?php echo $productData['product_range']; ?></p>
                                                 </div>
                                             </div>
-                                            <div class="review-card">
-                                                <div class="review-card-in d-flex align-items-baseline gap-1 gap-sm-3">
-                                                    <div class="reviewer-avatar">
-                                                        <img src="assets/images/reviewer-avatar.png" alt="">
-                                                    </div>
-                                                    <div>
-                                                        <div
-                                                            class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-2">
-                                                            <div class="review-title">
-                                                                <h4 class="mb-2">Ombir Singh</h4>
-                                                                <span>November 16, 2022</span>
-                                                            </div>
-                                                            <div class="d-flex gap-2">
-                                                                <button class="action-btn like-btn">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                        height="20" viewBox="0 0 20 20" fill="none">
-                                                                        <path
-                                                                            d="M16.8915 13.5541L17.4794 10.1543C17.6263 9.30519 16.9732 8.52852 16.1124 8.52852H11.7949C11.3669 8.52852 11.0411 8.14442 11.1103 7.72167L11.6626 4.3512C11.7523 3.80364 11.7267 3.24335 11.5873 2.70629C11.4719 2.26139 11.1287 1.90415 10.6773 1.75912L10.5564 1.72032C10.2836 1.63267 9.98584 1.65307 9.72861 1.77701C9.44549 1.91345 9.23836 2.1623 9.16158 2.45826L8.76516 3.98647C8.63903 4.47271 8.4553 4.94206 8.21841 5.38553C7.87228 6.0335 7.33713 6.55207 6.78085 7.03143L5.5819 8.06459C5.24385 8.3559 5.06632 8.79215 5.10479 9.23702L5.78159 17.0642C5.84367 17.7822 6.44392 18.3334 7.16374 18.3334H11.0376C13.9387 18.3334 16.4145 16.312 16.8915 13.5541Z"
-                                                                            fill="#FFB82E"></path>
-                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                            d="M2.47305 7.90422C2.80744 7.88979 3.09384 8.14134 3.12268 8.47479L3.93234 17.8386C3.98435 18.4401 3.51057 18.9585 2.90559 18.9585C2.33574 18.9585 1.875 18.4962 1.875 17.9274V8.52864C1.875 8.19394 2.13867 7.91865 2.47305 7.90422Z"
-                                                                            fill="#FFB82E"></path>
-                                                                    </svg>
-                                                                    <span>1</span>
-                                                                </button>
-                                                                <button class="action-btn dislike-btn">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                        height="20" viewBox="0 0 20 20" fill="none">
-                                                                        <path
-                                                                            d="M16.8915 13.5541L17.4794 10.1543C17.6263 9.30519 16.9732 8.52852 16.1124 8.52852H11.7949C11.3669 8.52852 11.0411 8.14442 11.1103 7.72167L11.6626 4.3512C11.7523 3.80364 11.7267 3.24335 11.5873 2.70629C11.4719 2.26139 11.1287 1.90415 10.6773 1.75912L10.5564 1.72032C10.2836 1.63267 9.98584 1.65307 9.72861 1.77701C9.44549 1.91345 9.23836 2.1623 9.16158 2.45826L8.76516 3.98647C8.63903 4.47271 8.4553 4.94206 8.21841 5.38553C7.87228 6.0335 7.33713 6.55207 6.78085 7.03143L5.5819 8.06459C5.24385 8.3559 5.06632 8.79215 5.10479 9.23702L5.78159 17.0642C5.84367 17.7822 6.44392 18.3334 7.16374 18.3334H11.0376C13.9387 18.3334 16.4145 16.312 16.8915 13.5541Z"
-                                                                            fill="#686868"></path>
-                                                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                                                            d="M2.47305 7.90422C2.80744 7.88979 3.09384 8.14134 3.12268 8.47479L3.93234 17.8386C3.98435 18.4401 3.51057 18.9585 2.90559 18.9585C2.33574 18.9585 1.875 18.4962 1.875 17.9274V8.52864C1.875 8.19394 2.13867 7.91865 2.47305 7.90422Z"
-                                                                            fill="#686868"></path>
-                                                                    </svg>
-                                                                    <span>1</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex mb-3 mb-md-4 review-star-wrapper gap-2">
-                                                            <span class="review-star one-start">
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                            </span>
-                                                            <p class="mb-0">Verified Purchase</p>
-                                                        </div>
-                                                        <h5>Ibell tig welding machine is good for the price</h5>
-                                                        <p class="mb-0">dryCELL: PUMA's designation for moisture-wicking
-                                                            properties that help
-                                                            keep you dry and comfortable, Flatlock Stitching: PUMA's
-                                                            solution
-                                                            for less friction and higher comfort</p>
-                                                    </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fa-solid fa-bullseye fa-2x me-3"></i>
+                                                <div>
+                                                    <h5><b>Effective Range</b></h5>
+                                                    <p class="mb-0"><?php echo $productData['effective_range']; ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fa-solid fa-weight-hanging fa-2x me-3"></i>
+                                                <div>
+                                                    <h5><b>Weight</b></h5>
+                                                    <p class="mb-0"><?php echo $productData['weight']; ?></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="tab-pane fade product-description-content" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+                                    <p>Tortor non reiciendis varius in, sed donec quis id fermentum, nibh quam id in hendrerit fusce eleifend. Aliquam eleifend et dapibus quo, consectetuer fermentum pulvinar, wisi maecenas tincidunt arcu. Soluta odio nec est consectetuer. Morbi in sed, libero eu duis velit arcu sed, ut cursus. Vitae fermentum turpis, erat platea, nunc tincidunt aliquet ornare accumsan, convallis tortor bibendum vel pellentesque ac arcu. Interdum ipsum tortor blandit vel magna phasellus, quis cras in lorem auctor, felis dolor donec quis suspendisse duis nonummy. Non sed feugiat nulla ac viverra in, in diam etiam mauris, conubia mi quis cras a suspendisse justo, rutrum vitae in senectus. Maiores sapien sed, ante id risus placerat quis quam. Non suspendisse ut felis erat, eu laoreet, vitae fames dolor et et vulputate posuere, suscipit elit euismod ac, nonummy in quam.</p>
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="product mb-4">
+            <div class="container">
+                <div class="title-group text-center">
+                    <h2 class="sub-title">RELATED PRODUCTS</h2>
+                </div>
+                <div class="product-action-wrapper d-flex flex-column flex-sm-row align-items-center gap-3 gap-xl-5">
+                    <ul class="product-nav d-flex align-items-center flex-shrink-0">
+                        <li><a href="#" class="product-link active">LATEST</a></li>
+                    </ul>
+                    <div class="border-top w-100">
+                    </div>
+                    
+                </div>
+                <div class="row justify-content-center gy-3">
+                    <?php foreach ($relatedArr as $key => $valueCat) { 
+
+                            $currentDate = new DateTime();
+                            $createdDate = new DateTime($valueCat['created_at']);
+                            $interval = $currentDate->diff($createdDate);
+                            $daysDifference = $interval->days;
+                            $isNew = $daysDifference <= 10;
+
+                        ?>
+                        <div class="col-sm-6 col-lg-4 col-xl-3">
+                            <a href="product-details.php?id=<?php echo base64_encode($valueCat['id']); ?>">
+                                <div class="product-card">
+                                <?php if ($isNew) { ?>
+                                    <span class="product-badge">new</span>
+                                <?php } ?>
+                                    <div class="product-img">
+                                        <img src="admin/product_images/<?php echo $valueCat['master_image']; ?>" alt="">
+                                    </div>
+                                    <div class="product-content">
+                                        <h6><?php echo $valueCat['short_description']; ?></h6>
+                                        <ul class="d-flex align-items-center gap-2">
+                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
+                                            <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
+                                        </ul>
+                                        <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
+                                            <h4>$ <?php echo $valueCat['price'] ?></h4>
+                                            <a href="javascript:void(0)" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </section>
@@ -454,14 +262,9 @@ $productData = $result->fetch_assoc();
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <?php if (isset($error)){ ?>
-			<div class="alert alert-danger mg-b-0" role="alert">
-				<button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button">
-					<span aria-hidden="true">×</span>
-				</button>
-				<strong><?php echo $error; ?></strong>
-			</div>
-		<?php } ?>
+		<div class="alert alert-danger mg-b-0" role="alert" style="display: none;">
+			<strong></strong>
+		</div>
         <form method="POST">
           <div class="row gy-3 gy-sm-4">
             <div class="col-12">
@@ -492,7 +295,12 @@ $productData = $result->fetch_assoc();
 
             var quantity = $('#p_quantity').html();
             var message = $('#requestMsg').val();
-            
+
+            if (!message.trim()) {
+                $('.alert').show().find('strong').text('Request message cannot be empty.');
+                return; 
+            }
+
             $.ajax({
                 type: 'POST',
                 url: 'functions/product/send-request.php',

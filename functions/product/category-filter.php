@@ -20,10 +20,19 @@ $productsResult = $conn->query($productsQuery);
 
 $html = '';
 while ($productRow = $productsResult->fetch_assoc()) {
+    
+    $currentDate = new DateTime();
+    $createdDate = new DateTime($productRow['created_at']);
+    $interval = $currentDate->diff($createdDate);
+    $daysDifference = $interval->days;
+    $isNew = $daysDifference <= 10;
+
     $html .= '<div class="col-sm-6 col-xl-4">';
     $html .= '  <a href="product-details.php?id='.base64_encode($productRow['id']).'">';
     $html .= '      <div class="product-card">';
-    $html .= '          <span class="product-badge">new</span>';
+    if ($isNew) {
+        $html .= '          <span class="product-badge">new</span>';
+    }
     $html .= '          <div class="product-img">';
     $html .= '              <img src="admin/product_images/' . htmlspecialchars($productRow['master_image']) . '" alt="' . htmlspecialchars($productRow['name']) . '">';
     $html .= '          </div>';
