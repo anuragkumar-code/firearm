@@ -503,13 +503,22 @@ $productData = $result->fetch_assoc();
                     product:<?php echo $get_id; ?>,
                 } ,
                 success: function(response){
-                    if(response == true){
-                        alert('Request send to the admin. Admin will contact you soon.');
-                        location.reload();
-                    }else{
-                        alert('Error sending request. Please try after sometime.');
-                        location.reload();
-
+                    if (response == true) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Request Sent',
+                            text: 'Request sent to the admin. Admin will contact you soon.',
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error sending request. Please try again later.',
+                        }).then(() => {
+                            location.reload();
+                        });
                     }
                 }
             });

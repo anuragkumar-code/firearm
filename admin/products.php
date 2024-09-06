@@ -92,25 +92,52 @@ $('.main-toggle').on('click', function() {
 	  	});
 	}
 
-	function deleteProduct(id){
-        if (confirm('Are you sure you want to delete this product?')) {
-            $.ajax({
-                type: 'POST',
-                url: 'functions/product/delete.php',
-                data: {
-                    id: id
-                },
-                success: function(result) {
-                    if (result == '1') {
-                        alert('Product deleted successfully.');
-                        location.reload();
-                    } else {
-                        alert('Something went wrong! Please contact admin.');
+	function deleteProduct(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'functions/product/delete.php',
+                    data: {
+                        id: id
+                    },
+                    success: function(result) {
+                        if (result == '1') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: 'Product deleted successfully.'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Something went wrong! Please try again.'
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'An error occurred while processing your request. Please try again.'
+                        });
                     }
-                }
-            });
-        }
+                });
+            }
+        });
     }
+
 </script>
 
 

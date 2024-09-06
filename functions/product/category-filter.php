@@ -28,7 +28,7 @@ while ($productRow = $productsResult->fetch_assoc()) {
     $html .= '              <img src="admin/product_images/' . htmlspecialchars($productRow['master_image']) . '" alt="' . htmlspecialchars($productRow['name']) . '">';
     $html .= '          </div>';
     $html .= '          <div class="product-content">';
-    $html .= '              <h6>' . htmlspecialchars($productRow['name']) . '</h6>';
+    $html .= '              <h6>' . htmlspecialchars($productRow['short_description']) . '</h6>';
     $html .= '              <ul class="d-flex align-items-center gap-2">';
     $html .= '                  <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';
     $html .= '                  <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>';

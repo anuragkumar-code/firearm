@@ -31,6 +31,8 @@ if (!isset($_SESSION['customer_id'])) {
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="assets/css/responsive.css" type="text/css">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>

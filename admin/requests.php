@@ -30,7 +30,7 @@
 					    ?>
                     <tr>
                         <td><?php echo $sno; ?></td>
-                        <td><a href="javascript:void(0)"><?php echo $row['request_id']; ?></a></td>
+                        <td><a href="javascript:void(0)" onclick="showDetails(<?php echo $row['id']; ?>)"><?php echo $row['request_id']; ?></a></td>
                         <td><?php echo $row['customer_name']; ?></td>
                         <td><?php echo $row['customer_mobile']; ?></td>
                         <td><?php echo $row['product_name']; ?></td>
@@ -38,7 +38,7 @@
                         <td><?php echo $row['message']; ?></td>
                         
                         <td>
-                        	<a class="btn btn-sm btn-danger" onclick="deleteCustomer(<?php echo $row['id']; ?>)"><i class="fa fa-trash"></i></a>
+                        	<a class="btn btn-sm btn-danger" onclick="deleteRequest(<?php echo $row['id']; ?>)"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                     <?php }} ?>
@@ -47,64 +47,151 @@
             </div>
         </div>
     </div>
+    
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="requestDetailsModal" tabindex="-1" aria-labelledby="requestDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="requestDetailsModalLabel">Request Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Customer Details Section -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Customer Details</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Name:</strong> <span id="customerName"></span></p>
+                                        <p><strong>Mobile:</strong> <span id="customerMobile"></span></p>
+                                        <p><strong>Email:</strong> <span id="customerEmail"></span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Request Date:</strong> <span id="requestDate"></span></p>
+                                        <p><strong>Address Line 1:</strong> <span id="customerAddressOne"></span></p>
+                                        <p><strong>Address Line 2:</strong> <span id="customerAddressTwo"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product Details Section -->
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Product Details</strong>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Product Name:</strong> <span id="productName"></span></p>
+                                <p><strong>Quantity:</strong> <span id="productQuantity"></span></p>
+                                <p><strong>Price:</strong> <span id="productPrice"></span></p>
+                                <p><strong>Short Description:</strong> <span id="productShortDescription"></span></p>
+                                <p><strong>Long Description:</strong> <span id="productLongDescription"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Product Image</strong>
+                            </div>
+                            <div class="card-body d-flex justify-content-center align-items-center" style="height: 250px;">
+                                <img id="productImage" src="" alt="Product Image" class="img-fluid" style="max-height: 200px; max-width: 100%; border: 1px solid #ddd; padding: 5px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
-    //function to toggle the switch
-	$('.main-toggle').on('click', function() {
-		$(this).toggleClass('on');
+    function showDetails(id) {
+        $.ajax({
+            type: 'POST',
+            url: 'functions/requests/request-details.php', 
+            data: { request_id: id },
+            success: function(response) {
+                const data = JSON.parse(response);
+                
+                $('#requestDetailsModalLabel').text("Request ID : "+data.request_id);
 
-		var id = $(this).data('id');
+                $('#customerName').text(data.customer_name);
+                $('#customerMobile').text(data.customer_mobile);
+                $('#customerEmail').text(data.customer_email);
+                $('#requestDate').text(data.request_date);
+                $('#customerAddressOne').text(data.customer_address_one);
+                $('#customerAddressTwo').text(data.customer_address_two);
 
-	    var hiddenInput = $('#statusId_' + id);
+                $('#productName').text(data.product_name);
+                $('#productQuantity').text(data.product_quantity);
+                $('#productPrice').text(data.product_price);
 
-	    if ($(this).hasClass('on')) {
-	        hiddenInput.val('A'); 
-	        updateStatus('I',id)
-	    } else {
-	        hiddenInput.val('I'); 
-	        updateStatus('A',id)
-	    }
-	})
+                $('#productShortDescription').text(data.product_short_description);
+                $('#productLongDescription').text(data.product_long_description);
+                    
+                const productImageUrl = '../admin/product_images/' + data.product_image; 
+                $('#productImage').attr('src', productImageUrl);
 
-	//fucntion to update the status of coffee
-	function updateStatus(status,id){
-		$.ajax({
-			type: 'POST',
-			url: 'functions/customers/update-status.php',
-			data: {
-				status:status,
-				id:id
-			},
-			success: function(result){
-				if(result == '1'){
-					console.log("status updated");
-				}else{
-					alert('Something went wrong! Please contact admin.');
-				}
-			}
-	  	});
-	}
-
-    function deleteCustomer(id){
-        if (confirm('Are you sure you want to delete this customer?')) {
-            $.ajax({
-                type: 'POST',
-                url: 'functions/customers/delete.php',
-                data: {
-                    id: id
-                },
-                success: function(result) {
-                    if (result == '1') {
-                        alert('Customer deleted successfully.');
-                        location.reload();
-                    } else {
-                        alert('Something went wrong! Please contact admin.');
-                    }
-                }
-            });
-        }
+                $('#requestDetailsModal').modal('show');
+            },
+            error: function() {
+                alert('Failed to fetch details. Please try again later.');
+            }
+        });
     }
+
+    function deleteRequest(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'functions/requests/delete.php',
+                    data: {
+                        id: id
+                    },
+                    success: function(result) {
+                        if (result == '1') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted',
+                                text: 'Request deleted successfully.',
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Something went wrong!',
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
+
 </script>
 
 

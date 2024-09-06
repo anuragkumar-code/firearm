@@ -12,9 +12,8 @@
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Mobile</th>
-                            <th scope="col">City</th>
-                            <th scope="col">State</th>
-                            <th scope="col">Country</th>
+                            <th scope="col">Address One</th>
+                            <th scope="col">Address Two</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -33,9 +32,8 @@
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['email']; ?></td>
                         <td><?php echo $row['mobile']; ?></td>
-                        <td><?php echo $row['city']; ?></td>
-                        <td><?php echo $row['state']; ?></td>
-                        <td><?php echo $row['country']; ?></td>
+                        <td><?php echo $row['address_one']; ?></td>
+                        <td><?php echo $row['address_two']; ?></td>
                         <td>
                             <div class="main-toggle main-toggle-success <?php if($row['status'] == 'A'){ ?> on <?php }?>" style="border-radius: 22px;" data-id="<?php echo $row['id']; ?>">
 								<span style="border-radius: 22px;"></span>
@@ -85,31 +83,69 @@
 				if(result == '1'){
 					console.log("status updated");
 				}else{
-					alert('Something went wrong! Please contact admin.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong! Please contact the admin.',
+                    });
 				}
-			}
+			},
+            error: function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while processing your request. Please try again.',
+                });
+            }
 	  	});
 	}
 
-    function deleteCustomer(id){
-        if (confirm('Are you sure you want to delete this customer?')) {
-            $.ajax({
-                type: 'POST',
-                url: 'functions/customers/delete.php',
-                data: {
-                    id: id
-                },
-                success: function(result) {
-                    if (result == '1') {
-                        alert('Customer deleted successfully.');
-                        location.reload();
-                    } else {
-                        alert('Something went wrong! Please contact admin.');
+    function deleteCustomer(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'functions/customers/delete.php',
+                    data: {
+                        id: id
+                    },
+                    success: function(result) {
+                        if (result == '1') {
+                            Swal.fire({
+                                icon: 'success',    
+                                title: 'Deleted',
+                                text: 'Customer deleted successfully.',
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Something went wrong! Please try again.',
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while processing your request. Please try again.',
+                        });
                     }
-                }
-            });
-        }
+                });
+            }
+        });
     }
+
 </script>
 
 

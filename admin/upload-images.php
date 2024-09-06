@@ -228,25 +228,52 @@ while ($imageRow = $imageResult->fetch_assoc()) {
 	}
 
 
-    function deleteImage(id){
-        if (confirm('Are you sure you want to delete this customer?')) {
-            $.ajax({
-                type: 'POST',
-                url: 'functions/product/delete-image.php',
-                data: {
-                    id: id
-                },
-                success: function(result) {
-                    if (result == '1') {
-                        alert('Customer deleted successfully.');
-                        location.reload();
-                    } else {
-                        alert('Something went wrong! Please contact admin.');
+    function deleteImage(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'functions/product/delete-image.php',
+                    data: {
+                        id: id
+                    },
+                    success: function(result) {
+                        if (result == '1') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: 'Image deleted successfully.'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Something went wrong! Please contact the admin.'
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'An error occurred while processing your request. Please try again.'
+                        });
                     }
-                }
-            });
-        }
+                });
+            }
+        });
     }
+
 </script>
 
 <?php include('partials/footer.php'); ?>
