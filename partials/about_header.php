@@ -3,19 +3,12 @@ include('config/db.php');
 
 session_start();
 
-$current_page = basename($_SERVER['PHP_SELF']);
-
-if (!isset($_SESSION['customer_id'])) {
-    header('location:index.php');
-    exit(); 
-}  
-
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Armaments - Online Gun Shop</title>
+    <title>Armaments - About Us</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description"
@@ -30,6 +23,8 @@ if (!isset($_SESSION['customer_id'])) {
     <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
     <link rel="stylesheet" href="assets/css/responsive.css" type="text/css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -62,9 +57,9 @@ if (!isset($_SESSION['customer_id'])) {
                     <?php }else{ ?>
                         <span style="color: black;">
                             <img src="assets/images/user.svg" alt="">
-                            <a style="color: black;" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#loginPopUp">Log In </a>
+                            <a style="color: black;" href="javascript:void(0)" onclick="showLoginForm()">Log In </a>
                             / 
-                            <a style="color: black;" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#registerPopUp">Register</a>
+                            <a style="color: black;" href="javascript:void(0)" onclick="showRegisterForm()">Register</a>
                         </span>
                     <?php } ?>
                 </div>
@@ -80,13 +75,13 @@ if (!isset($_SESSION['customer_id'])) {
                 <div class="collapse navbar-collapse" id="navbar-right">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.php">Home</a>
+                            <a class="nav-link" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="product.php">Shop</a>
+                            <a href="javascript:void(0);" class="nav-link" onclick="handleShopClick('shop');">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about-us.php">about us</a>
+                            <a class="nav-link active" href="about-us.php">about us</a>
                         </li>
                     </ul>
                 </div>
@@ -118,3 +113,5 @@ if (!isset($_SESSION['customer_id'])) {
             </div>
         </nav>
     </header>
+
+

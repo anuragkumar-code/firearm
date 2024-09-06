@@ -2108,4 +2108,42 @@ footer li,
     justify-content: space-between;
 }
 
+
+.section-heading {
+    font-size: 1.75rem !important;
+    font-weight: 600 !important; 
+    color: #333 !important; 
+    margin-bottom: 20px !important;
+}
+
+
+.values-heading {
+    font-size: 2rem !important; 
+    font-weight: 700 !important;
+    color: #222 !important;
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+    text-transform: uppercase !important; 
+}
+
+.about-us-section {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+}
+
+.our-values-section {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+}
+
+.value-card h6 {
+    font-weight: 600 !important;
+    font-size: 1.25rem !important; 
+    color: #444 !important;
+}
+
+.value-card p {
+    font-size: 1rem !important; 
+    color: #666 !important; 
+}
 /* Footer End */
