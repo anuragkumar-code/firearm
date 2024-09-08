@@ -17,11 +17,11 @@ function ensureUrlScheme($url) {
         <div class="footer-top">
             <div class="row gy-4 justify-content-between">
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3 footer-about">
-                    <a href="index.html" class="footer-brand mb-4 d-block">
-                        <img src="assets/images/logo.png" class="img-fluid" alt="">
+                    <a href="index.php" class="footer-brand mb-4 d-block">
+                        <span class="logoSpan" style="color: white;">Bullfrog Gun Clearance</span>
+
                     </a>
-                    <p class="mb-3 mb-xl-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua</p>
+                    <p class="mb-3 mb-xl-4">Discover premium firearms and accessories with a focus on safety, reliability, and responsible ownership.</p>
                     <ul class="social-media d-flex align-items-center gap-2">
                         <?php if($adminData['discord'] != ""){ ?><li><a target="_blank" href="<?php echo ensureUrlScheme($adminData['discord']); ?>" class="discord"><i class="fa-brands fa-discord"></i></a></li><?php } ?>
                         <?php if($adminData['reddit'] != ""){ ?><li><a target="_blank" href="<?php echo ensureUrlScheme($adminData['reddit']); ?>" class="reddit"><i class="fa-brands fa-reddit-alien"></i></a></li><?php } ?>
@@ -48,7 +48,7 @@ function ensureUrlScheme($url) {
                 <div class="col-sm-6 col-lg-4 col-xl-3 footer-link-wrapper">
                     <h3>CONTACT INFO</h3>
                     <p class="mb-3 mb-md-4"><span>Address:</span> <?php echo $adminData['address_one']; ?> <?php echo $adminData['address_two']; ?> <?php echo $adminData['city']; ?>, <?php echo $adminData['state']; ?>, <?php echo $adminData['country']; ?>, <?php echo $adminData['pincode']; ?></p>
-                    <p class="mb-3 mb-md-4"><span>Phone:</span> +91 98765 98765</p>
+                    <p class="mb-3 mb-md-4"><span>SMS:</span> <?php echo $mobile; ?> <b>(TEXT ONLY)</b></p>
                     <p><span>E-mail:</span> <?php echo $adminData['info_email']; ?></p>
                 </div>
             </div>

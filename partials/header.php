@@ -10,6 +10,19 @@ if (!isset($_SESSION['customer_id'])) {
     exit(); 
 }  
 
+$adminQuery = "SELECT * from users where type = 'A'";
+$result = $conn->query($adminQuery);
+$adminData = $result->fetch_assoc();
+
+$mobile = formatMobileNumber($adminData['mobile']);
+
+function formatMobileNumber($mobile) {
+    $formatted = substr_replace($mobile, ' ', 3, 0);
+    $formatted = substr_replace($formatted, ' ', 7, 0);
+
+    return $formatted;
+}
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -40,6 +53,15 @@ if (!isset($_SESSION['customer_id'])) {
         .col-6{
             margin-right: 5px!important;
         }
+
+        .logoSpan {
+            font-family: 'Reddit Sans Condensed', sans-serif; 
+            font-size: 28px;
+            color: black; 
+            text-transform: uppercase;
+            letter-spacing: 2px; 
+            font-weight: 900; 
+        }
     </style>
     <div
         class="loader-wrapper position-fixed inset-0 justify-content-center align-items-center z-[9999] h-screen w-full bg-white">
@@ -50,7 +72,8 @@ if (!isset($_SESSION['customer_id'])) {
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <a class="navbar-brand p-0 d-none d-xl-block" href="index.php">
-                        <img src="assets/images/logo-black.png" alt="logo">
+                        <!-- <img src="assets/images/logo-black.png" alt="logo"> -->
+                        <span class="logoSpan">Bullfrog Gun Clearance</span>
                     </a>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-4">
@@ -93,22 +116,12 @@ if (!isset($_SESSION['customer_id'])) {
                     </ul>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-sm-3">
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="d-flex align-items-center gap-2" title="Text messsages only">
                         <div class="icon">
-                            <img src="assets/images/truck-side.svg" alt="">
+                             <i style="color:white" class="fa fa-message"></i>
                         </div>
                         <div class="d-none d-xl-block">
-                            <h5>FREE DELIVERY WORLDWIDE</h5>
-                            <h6>On order Over $100</h6>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="icon">
-                            <img src="assets/images/gift.svg" alt="">
-                        </div>
-                        <div class="d-none d-xl-block">
-                            <h5>BUY 1 GET 1 FREE</h5>
-                            <h6>On order Over $100</h6>
+                            <h5><?php echo $mobile; ?> <b>(Text Only)</b></h5>
                         </div>
                     </div>
                     <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"

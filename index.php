@@ -1,6 +1,20 @@
 ﻿<?php 
 session_start();
 include('config/db.php'); 
+
+$adminQuery = "SELECT * from users where type = 'A'";
+$result = $conn->query($adminQuery);
+$adminData = $result->fetch_assoc();
+
+$mobile = formatMobileNumber($adminData['mobile']);
+
+function formatMobileNumber($mobile) {
+    $formatted = substr_replace($mobile, ' ', 3, 0);
+    $formatted = substr_replace($formatted, ' ', 7, 0);
+
+    return $formatted;
+}
+
 ?>
 
 <!doctype html>
@@ -24,6 +38,10 @@ include('config/db.php');
     <link rel="stylesheet" href="assets/css/responsive.css" type="text/css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Reddit+Sans+Condensed:wght@200..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -31,6 +49,16 @@ include('config/db.php');
         .col-6{
             margin-right: 5px!important;
         }
+        .logoSpan {
+            font-family: 'Reddit Sans Condensed', sans-serif; 
+            font-size: 28px;
+            color: white; 
+            text-transform: uppercase;
+            letter-spacing: 2px; 
+            font-weight: 900; 
+        }
+
+
     </style>
     <div class="loader-wrapper position-fixed inset-0 justify-content-center align-items-center z-[9999] h-screen w-full bg-white">
         <div class="loader"></div>
@@ -42,7 +70,8 @@ include('config/db.php');
                 </div>
                 <div>
                     <a class="navbar-brand p-0 d-none d-xl-block" href="index.html">
-                        <img src="assets/images/logo.png" alt="logo">
+                        <!-- <img src="assets/images/logo.png" alt="logo"> -->
+                        <span class="logoSpan">Bullfrog Gun Clearance</span>
                     </a>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-lg-4">
@@ -85,20 +114,12 @@ include('config/db.php');
                     </ul>
                 </div>
                 <div class="d-flex align-items-center gap-2 gap-sm-3">
-                    <div class="d-flex align-items-center gap-2">
+                    <div class="d-flex align-items-center gap-2" title="Text messsages only">
                         <div class="icon">
-                            <img src="assets/images/truck-side.svg" alt="">
+                             <i style="color:white" class="fa fa-message"></i>
                         </div>
                         <div class="d-none d-xl-block">
-                            <h5>FREE DELIVERY WORLDWIDE</h5>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="icon">
-                            <img src="assets/images/gift.svg" alt="">
-                        </div>
-                        <div class="d-none d-xl-block">
-                            <h5>GET BEST DEALS</h5>
+                            <h5><?php echo $mobile; ?> <b>(Text Only)</b></h5>
                         </div>
                     </div>
                     <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse"
