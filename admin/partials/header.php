@@ -85,6 +85,13 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="products.php" class="nav-item nav-link <?php echo ($currentPage == 'products.php') ? 'active' : ''; ?>"><i class="fa fa-box me-2"></i>Products</a>
                     <a href="customers.php" class="nav-item nav-link <?php echo ($currentPage == 'customers.php') ? 'active' : ''; ?>"><i class="fa fa-users me-2"></i>Customers</a>
                     <a href="requests.php" class="nav-item nav-link <?php echo ($currentPage == 'requests.php') ? 'active' : ''; ?>"><i class="fa fa-file me-2"></i>Requests</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Content</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="contents-home.php" class="dropdown-item <?php echo ($currentPage == 'contents-home.php') ? 'active' : ''; ?>">Home Page</a>
+                            <a href="contents-aboutus.php" class="dropdown-item <?php echo ($currentPage == 'contents-aboutus.php') ? 'active' : ''; ?>">About Us Page</a>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </div>

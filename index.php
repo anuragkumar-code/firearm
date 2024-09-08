@@ -15,19 +15,23 @@ function formatMobileNumber($mobile) {
     return $formatted;
 }
 
+
+$contentArr = array();
+$contentQuery = "SELECT * from content_texts where page = 'home_page'";
+$result = $conn->query($contentQuery);
+while($contentData = $result->fetch_assoc()){
+    $contentArr[] = $contentData;
+}
+
 ?>
 
 <!doctype html>
 <html lang="en">
 <head>
     <title>Armaments - Online Gun Shop</title>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description"
-        content="Welcome to Armaments - your ultimate online destination for top-notch firearms and tactical gear. Explore our vast collection of weaponry, accessories, and expertly crafted gear designed to elevate your shooting experience. With a commitment to quality and customer satisfaction, we're your trusted partner in arming enthusiasts and professionals alike. Browse our inventory today and gear up for your next mission with confidence!">
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
-    <!-- CSS Libraries -->
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
         rel="stylesheet">
@@ -138,9 +142,8 @@ function formatMobileNumber($mobile) {
                     <div class="col-lg-6">
                         <div class="banner-left">
                             <h6>Welcome to <span>Danny's Firearms</span></h6>
-                            <h2>Your Trusted Source for<br class="d-none d-md-block">
-                                Quality Firearms</h2>
-                            <p>Discover premium firearms and accessories with a focus on safety, reliability, and responsible ownership.</p>
+                            <h2><?php echo $contentArr[0]['value']; ?></h2>
+                            <p><?php echo $contentArr[1]['value']; ?></p>
                         </div>
                     </div>
                 </div>
@@ -157,9 +160,8 @@ function formatMobileNumber($mobile) {
                     <div class="col-lg-6">
                         <div class="d-flex flex-column gap-3 gap-md-4">
                             <h2 class="sub-title mb-0">HOW TO ORDER</h2>
-                            <h4 class="highlight-text">JUST REGISTER YOURSELF WITH US, AND GET STARTED TO BUY YOUR FAVOURITES</h4>
-                            <p>Generate Lorem Ipsum placeholder text. Select the number of characters, words, sentences
-                                or paragraphs, and hit generate!</p>
+                            <h4 class="highlight-text"><?php echo $contentArr[2]['value']; ?></h4>
+                            <p><?php echo $contentArr[3]['value']; ?></p>
                             <div class="d-flex align-items-center gap-3 gap-lg-4 d-none">
                                 <h3>$775.00</h3>
                                 <a href="#" class="primary-btn">BUY NOW <i class="fa-solid fa-arrow-right"></i></a>
@@ -222,8 +224,8 @@ function formatMobileNumber($mobile) {
         <section class="news inner-gap">
             <div class="container">
                 <div class="title-group text-center">
-                    <h2 class="sub-title">Our Commitment to Safety</h2>
-                    <p>We prioritize safety above all else. That’s why we offer extensive resources on proper firearm handling, storage solutions, and training courses. Whether you're a first-time buyer or an experienced shooter, we're here to support your journey with the highest standards of education and care.</p>
+                    <h2 class="sub-title"><?php echo $contentArr[4]['value']; ?></h2>
+                    <p><?php echo $contentArr[5]['value']; ?></p>
                 </div>
             </div>
         </section>        

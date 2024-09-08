@@ -1,4 +1,14 @@
-<?php include('partials/about_header.php'); ?>
+<?php include('partials/about_header.php');
+
+
+$contentAboutArr = array();
+$contentAboutQuery = "SELECT * from content_texts where page = 'about_us'";
+$result = $conn->query($contentAboutQuery);
+while($contentAboutData = $result->fetch_assoc()){
+    $contentAboutArr[] = $contentAboutData;
+}
+
+?>
 
 <main id="main-content" class="position-relative">
     <section class="page-title position-relative">
@@ -26,7 +36,7 @@
                 <div class="col-lg-6">
                     <div class="d-flex flex-column align-items-start gap-3 gap-md-4">
                         <h2 class="sub-title mb-0">About Us</h2>
-                        <p>We are dedicated to serving the needs of responsible gun owners with integrity and expertise. Founded on the principles of quality, safety, and customer satisfaction, our company has become a trusted name in the firearms industry.</p>
+                        <p><?php echo $contentAboutArr[0]['value']; ?></p>
                     </div>
                 </div>
             </div>
@@ -46,7 +56,7 @@
                         </div>
                         <div>
                             <h6>Quality</h6>
-                            <p>We carefully curate our inventory, offering only the best firearms from leading manufacturers. Each product is selected for its performance, reliability, and craftsmanship.</p>
+                            <p><?php echo $contentAboutArr[1]['value']; ?></p>
                         </div>
                     </div>
                 </div>
@@ -57,7 +67,7 @@
                         </div>
                         <div>
                             <h6>Safety</h6>
-                            <p>We prioritize safety in everything we do. From offering educational resources to ensuring that our sales practices comply with all legal regulations, we are committed to promoting responsible gun ownership.</p>
+                            <p><?php echo $contentAboutArr[2]['value']; ?></p>
                         </div>
                     </div>
                 </div>
@@ -68,7 +78,7 @@
                         </div>
                         <div>
                             <h6>Customer Service</h6>
-                            <p>Our team is passionate about firearms and dedicated to helping you find exactly what you need. We take pride in providing personalized service and expert advice to help you make informed decisions.</p>
+                            <p><?php echo $contentAboutArr[3]['value']; ?></p>
                         </div>
                     </div>
                 </div>

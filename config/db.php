@@ -9,4 +9,11 @@ if ($conn->connect_error) {
 }
 
 
+$contentArr = array();
+$contentQuery = "SELECT * from content_texts where page = 'home_page'";
+$result = $conn->query($contentQuery);
+while($contentData = $result->fetch_assoc()){
+    $contentArr[] = $contentData;
+}
+
 ?>
