@@ -40,6 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+
+$contentAdminArr = array();
+$contentAdminQuery = "SELECT * from content_texts where page = 'home_page'";
+$result = $conn->query($contentAdminQuery);
+while($contentAdminData = $result->fetch_assoc()){
+    $contentAdminArr[] = $contentAdminData;
+}
+
+
 ?>
 
     <div class="container-fluid pt-4 px-4">
@@ -57,12 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row">
                             <div class="mb-2 col-md-12">
                                 <label for="banner_one" class="form-label"><b>Banner Text One<span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="banner_one" value="<?php echo $contentArr[0]['value']; ?>" id="banner_one">
+                                <input required type="text" class="form-control" name="banner_one" value="<?php echo $contentAdminArr[0]['value']; ?>" id="banner_one">
                             </div>
 
                             <div class="mb-2 col-md-12">
                                 <label for="banner_two" class="form-label"><b>Banner Text Two<span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="banner_two" value="<?php echo $contentArr[1]['value']; ?>" id="banner_two">
+                                <input required type="text" class="form-control" name="banner_two" value="<?php echo $contentAdminArr[1]['value']; ?>" id="banner_two">
                             </div>
                         </div>
                         <button style="float: right;margin-bottom:5px" type="submit" class="btn btn-primary" name="updateBanner">Update</button>
@@ -83,12 +92,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row">
                             <div class="mb-2 col-md-12">
                                 <label for="how_to_order_one" class="form-label"><b>Text One<span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="how_to_order_one" value="<?php echo $contentArr[2]['value']; ?>" id="how_to_order_one">
+                                <input required type="text" class="form-control" name="how_to_order_one" value="<?php echo $contentAdminArr[2]['value']; ?>" id="how_to_order_one">
                             </div>
 
                             <div class="mb-2 col-md-12">
                                 <label for="how_to_order_two" class="form-label"><b>Text Two<span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="how_to_order_two" value="<?php echo $contentArr[3]['value']; ?>" id="how_to_order_two">
+                                <input required type="text" class="form-control" name="how_to_order_two" value="<?php echo $contentAdminArr[3]['value']; ?>" id="how_to_order_two">
                             </div>
                         </div>
                         <button style="float: right;margin-bottom:5px" type="submit" class="btn btn-primary" name="updateOrderText">Update</button>
@@ -109,12 +118,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="row">
                             <div class="mb-2 col-md-12">
                                 <label for="safety_header" class="form-label"><b>Heading<span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="safety_header" value="<?php echo $contentArr[4]['value']; ?>" id="safety_header">
+                                <input required type="text" class="form-control" name="safety_header" value="<?php echo $contentAdminArr[4]['value']; ?>" id="safety_header">
                             </div>
 
                             <div class="mb-2 col-md-12">
                                 <label for="safety_one" class="form-label"><b>Text One<span class="text-danger">*</span></b></label>
-                                <textarea required class="form-control" name="safety_one" id="safety_one"><?php echo $contentArr[5]['value']; ?></textarea>
+                                <textarea required class="form-control" name="safety_one" id="safety_one"><?php echo $contentAdminArr[5]['value']; ?></textarea>
                             </div>
                         </div>
                         <button style="float: right;margin-bottom:5px" type="submit" class="btn btn-primary" name="updateSafetyText">Update</button>
