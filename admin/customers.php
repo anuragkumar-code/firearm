@@ -12,8 +12,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Mobile</th>
-                            <th scope="col">Address One</th>
-                            <th scope="col">Address Two</th>
+                            <th scope="col">Address</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -33,7 +32,6 @@
                         <td><?php echo $row['email']; ?></td>
                         <td><?php echo $row['mobile']; ?></td>
                         <td><?php echo $row['address_one']; ?></td>
-                        <td><?php echo $row['address_two']; ?></td>
                         <td>
                             <div class="main-toggle main-toggle-success <?php if($row['status'] == 'A'){ ?> on <?php }?>" style="border-radius: 22px;" data-id="<?php echo $row['id']; ?>">
 								<span style="border-radius: 22px;"></span>

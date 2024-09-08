@@ -9,19 +9,18 @@ if(isset($_POST['addProduct'])){
     $model = $_POST['productModel'];
     $caliber = $_POST['productCaliber'];
     $price = $_POST['productPrice'];
-    $product_range = $_POST['productRange'];
-    $effective_range = $_POST['productEffectiveRange'];
     $weight = $_POST['productWeight'];
     $short_description = $_POST['productShortDesc'];
     $long_description = $_POST['productLongDesc'];
 
-    $insertProductQuery = "INSERT INTO `products` (`category_id`, `name`, `manufacturer`, `model`, `caliber`, `price`, `product_range`, `effective_range`, `weight`, `short_description`, `long_description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $insertProductQuery = "INSERT INTO `products` (`category_id`, `name`, `manufacturer`, `model`, `caliber`, `price`, `weight`, `short_description`, `long_description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($insertProductQuery)) {
-        $stmt->bind_param('sssssssssss', $category_id, $name, $manufacturer, $model, $caliber, $price, $product_range, $effective_range, $weight, $short_description, $long_description);
+        $stmt->bind_param('sssssssss', $category_id, $name, $manufacturer, $model, $caliber, $price, $weight, $short_description, $long_description);
 
         if ($stmt->execute()) {
-            header('Location: ../../products.php');
+            $last_id = base64_encode($conn->insert_id);
+            header('Location: ../../upload-images.php?product='.$last_id);
             exit();
         } else {
             echo "Error inserting product: " . $stmt->error . "<br>";

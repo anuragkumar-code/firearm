@@ -41,14 +41,7 @@
                                     <input required type="text" class="form-control" name="productPrice" id="productPrice">
                                 </div>
                             </div>
-                            <div class="mb-2 col-md-4">
-                                <label for="productRange" class="form-label"><b>Range <span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="productRange" id="productRange">
-                            </div>
-                            <div class="mb-2 col-md-4">
-                                <label for="productEffectiveRange" class="form-label"><b>Effective Range <span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="productEffectiveRange" id="productEffectiveRange">
-                            </div>
+                            
                             <div class="mb-2 col-md-4">
                                 <label for="productWeight" class="form-label"><b>Weight <span class="text-danger">*</span></b></label>
                                 <div class="input-group">

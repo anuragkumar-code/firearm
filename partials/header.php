@@ -108,7 +108,7 @@ function formatMobileNumber($mobile) {
                             <a class="nav-link active" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="product.php">Shop</a>
+                            <a class="nav-link" href="product.php">Product Items</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="about-us.php">about us</a>

@@ -40,7 +40,7 @@ if ($res->num_rows == 1) {
         }
     } else {
         $result['error_login'] = true;
-        $result['error'] = "Your account is not verified yet !";
+        $result['error'] = "Sorry, your account is not yet verified by our admins. We will notify you once it gets verified. Thank you.";
     }
 } else {
     $result['error_login'] = true;

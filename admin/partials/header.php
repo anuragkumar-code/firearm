@@ -101,11 +101,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
-                <a href="#" class="sidebar-toggler flex-shrink-0 d-none">
-                    <i class="fa fa-bars"></i>
+                <a href="javascript:history.back()" class="btn btn-info btn-circle" title="Go Back">
+                    <i class="fa fa-arrow-left"></i>
                 </a>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">

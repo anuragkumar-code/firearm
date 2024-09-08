@@ -65,7 +65,7 @@ if (isset($_POST['deleteCategoryId'])) {
     <div class="container-fluid pt-4 px-4">
         <div class="bg-light text-center rounded p-4">
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h6 class="mb-0">Categories</h6>
+                <h6 class="mb-0">Product Categories</h6>
                 <a href="javascript:void(0);" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Category</a>
             </div>
             <div class="table-responsive">

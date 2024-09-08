@@ -55,12 +55,6 @@
               </div>
             </div>
             <div class="col-12">
-              <div class="form-floating">
-                <input type="text" class="form-control" name="address_two" id="address_two" placeholder="Enter address line two" required>
-                <label for="address_two">Enter your address line two</label>
-              </div>
-            </div>
-            <div class="col-12">
                 <div class="form-floating">
                     <span><b>Already registered with us ? <a href="javascript:void(0)" onclick="showLoginForm()">Login Now</a></b></span>
                 </div>
@@ -84,7 +78,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-		<div class="alert alert-danger mg-b-0" role="alert" style="display: none;">
+		<div class="alert alert-warning mg-b-0" role="alert" style="display: none;">
 			<strong></strong>
 		</div>
         <form method="POST">
@@ -156,7 +150,11 @@
                 var result = JSON.parse(response);
 
                 if (result.error_login) {
-                    $('.alert').show().find('strong').text(result.error);
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Account Pending Approval',
+                        text: 'Sorry, your account is not yet verified by our admins. We will notify you once it gets verified. Thank you.',
+                    });
                 } else {
                     $('.alert').hide();
                     window.location.href = "index.php";
@@ -200,7 +198,6 @@
         var confirmPassword = $('#confirmPassword').val();
 
         var address_one = $('#address_one').val();
-        var address_two = $('#address_two').val();
 
         var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -245,11 +242,6 @@
             return;
         }
 
-        if (!address_two) {
-            showError('Please enter address line two!');
-            return;
-        }
-
         $.ajax({
             type: 'POST',
             url: 'functions/auth/register.php',
@@ -259,7 +251,6 @@
                 phone:phone,
                 password:password,
                 address_one:address_one,
-                address_two:address_two,
             } ,
             success: function(response){
                 var result = JSON.parse(response);

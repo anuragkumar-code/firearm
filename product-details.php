@@ -36,7 +36,7 @@ while($productImageData = $resultImage->fetch_assoc()){
                 </nav>
             </div>
         </section>
-        <section class="inner-gap pb-0">
+        <section class="inner-gap pb-0 mb-5">
             <div class="container">
                 <div class="row gy-3">
                     <div class="col-lg-6">
@@ -75,17 +75,37 @@ while($productImageData = $resultImage->fetch_assoc()){
                         <div class="d-flex flex-column align-items-start gap-3">
                             <h2 class="product-title"><?php echo $productData['name']; ?></h2>
                             <h5 class="order-id"><?php echo $productData['short_description']; ?></h5>
-                            <div class="d-flex align-items-center gap-3">
-                                <ul class="d-flex align-items-center gap-1">
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                    <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                </ul>
-                                <h6 class="product-rating">5.0 (100 Review)</h6>
+                            <p><?php echo $productData['long_description']; ?></p>
+
+                            <div class="row mt-3">
+                                <div class="col-md-12 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa-solid fa-cogs fa-2x me-3"></i>
+                                        <div>
+                                            <h5><b>Model</b></h5>
+                                            <p class="mb-0"><?php echo $productData['model']; ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa-solid fa-bullseye fa-2x me-3"></i>
+                                        <div>
+                                            <h5><b>Caliber</b></h5>
+                                            <p class="mb-0"><?php echo $productData['caliber']; ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa-solid fa-weight-hanging fa-2x me-3"></i>
+                                        <div>
+                                            <h5><b>Weight</b></h5>
+                                            <p class="mb-0"><?php echo $productData['weight']; ?></p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="product-description"><?php  echo $productData['long_description']; ?></p>
                             <h2 class="product-price"><span>$<?php echo $productData['price']; ?></span></h2>
                             <div class="d-flex gap-3">
                                 <ul class="quantity-selector">
@@ -95,110 +115,13 @@ while($productImageData = $resultImage->fetch_assoc()){
                                 </ul>
                                 <a href="javascript:void(0)" onclick="showRequestPopup()" class="primary-btn">Send Request</a>
                             </div>
-                            <div class="w-100 d-flex flex-column flex-sm-row align-items-center gap-2 gap-sm-3">
-                                <button class="d-none wishlist-btn btn d-flex align-items-center gap-3"><img
-                                        src="assets/images/heart.svg" alt="">Add Wishlist</button>
-                                <div class="d-flex flex-wrap align-items-center gap-2 gap-md-3">
-                                    <a href="javascript:void(0)"><img src="assets/images/google-pay.png"
-                                            class="img-fluid" alt=""></a>
-                                    <a href="javascript:void(0)"><img src="assets/images/apple-pay.png"
-                                            class="img-fluid" alt=""></a>
-                                    <a href="javascript:void(0)"><img src="assets/images/stripe.png" class="img-fluid"
-                                            alt=""></a>
-                                    <a href="javascript:void(0)"><img src="assets/images/paypal.png" class="img-fluid"
-                                            alt=""></a>
-                                    <a href="javascript:void(0)"><img src="assets/images/visa.png" class="img-fluid"
-                                            alt=""></a>
-                                    <a href="javascript:void(0)"><img src="assets/images/master-card.png"
-                                            class="img-fluid" alt=""></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mt-4 pt-5 mb-5">
-                        <div class="product-description-wrapper">
-                            <div class="nav nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
-                                    aria-selected="true">PRODUCT PARAMETERS</button>
-                                <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile"
-                                    aria-selected="false">DESCRIPTION</button>
-                            </div>
-
-                            <div class="tab-content" id="v-pills-tabContent">
-                                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-                                    aria-labelledby="v-pills-home-tab" tabindex="0">
-                                    <div class="row mt-3">
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fa-solid fa-industry fa-2x me-3"></i>
-                                                <div>
-                                                    <h5><b>Manufacturer</b></h5>
-                                                    <p class="mb-0"><?php echo $productData['manufacturer']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fa-solid fa-cogs fa-2x me-3"></i>
-                                                <div>
-                                                    <h5><b>Model</b></h5>
-                                                    <p class="mb-0"><?php echo $productData['model']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fa-solid fa-bullseye fa-2x me-3"></i>
-                                                <div>
-                                                    <h5><b>Caliber</b></h5>
-                                                    <p class="mb-0"><?php echo $productData['caliber']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fa-solid fa-ruler fa-2x me-3"></i>
-                                                <div>
-                                                    <h5><b>Product Range</b></h5>
-                                                    <p class="mb-0"><?php echo $productData['product_range']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fa-solid fa-bullseye fa-2x me-3"></i>
-                                                <div>
-                                                    <h5><b>Effective Range</b></h5>
-                                                    <p class="mb-0"><?php echo $productData['effective_range']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <i class="fa-solid fa-weight-hanging fa-2x me-3"></i>
-                                                <div>
-                                                    <h5><b>Weight</b></h5>
-                                                    <p class="mb-0"><?php echo $productData['weight']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade product-description-content" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
-                                    <p>Tortor non reiciendis varius in, sed donec quis id fermentum, nibh quam id in hendrerit fusce eleifend. Aliquam eleifend et dapibus quo, consectetuer fermentum pulvinar, wisi maecenas tincidunt arcu. Soluta odio nec est consectetuer. Morbi in sed, libero eu duis velit arcu sed, ut cursus. Vitae fermentum turpis, erat platea, nunc tincidunt aliquet ornare accumsan, convallis tortor bibendum vel pellentesque ac arcu. Interdum ipsum tortor blandit vel magna phasellus, quis cras in lorem auctor, felis dolor donec quis suspendisse duis nonummy. Non sed feugiat nulla ac viverra in, in diam etiam mauris, conubia mi quis cras a suspendisse justo, rutrum vitae in senectus. Maiores sapien sed, ante id risus placerat quis quam. Non suspendisse ut felis erat, eu laoreet, vitae fames dolor et et vulputate posuere, suscipit elit euismod ac, nonummy in quam.</p>
-                                    
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="product mb-4">
+        <section class="product mt-5 mb-4">
             <div class="container">
                 <div class="title-group text-center">
                     <h2 class="sub-title">RELATED PRODUCTS</h2>
@@ -230,20 +153,11 @@ while($productImageData = $resultImage->fetch_assoc()){
                                     <div class="product-img">
                                         <img src="admin/product_images/<?php echo $valueCat['master_image']; ?>" alt="">
                                     </div>
-                                    <div class="product-content">
-                                        <h6><?php echo $valueCat['short_description']; ?></h6>
-                                        <ul class="d-flex align-items-center gap-2">
-                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                            <li><i class="fa-solid fa-star" style="color: #FFB82E;"></i></li>
-                                            <li><i class="fa-solid fa-star" style="color: #D9D9D9;"></i></li>
-                                        </ul>
-                                        <div class="d-flex justify-content-between align-items-center gap-3 gap-lg-4">
-                                            <h4>$ <?php echo $valueCat['price'] ?></h4>
-                                            <a href="javascript:void(0)" class=""><img src="assets/images/shopping-bag.svg" alt=""></a>
-                                        </div>
+                                    <div class="product-content d-flex justify-content-between align-items-center mb-4">
+                                        <h6><?php echo $valueCat['name']; ?></h6>
+                                        <h4>$ <?php echo $valueCat['price'] ?></h4>
                                     </div>
+                                    <div class="view-product-button mt-1">View Product</div>
                                 </div>
                             </a>
                         </div>

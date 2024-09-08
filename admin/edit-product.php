@@ -58,14 +58,6 @@ while ($imageRow = $imageResult->fetch_assoc()) {
                             </div>
                         </div>
                         <div class="mb-2 col-md-4">
-                            <label for="productRange" class="form-label"><b>Range <span class="text-danger">*</span></b></label>
-                            <input required type="text" class="form-control" name="productRange" id="productRange" value="<?php echo $fetch['product_range']; ?>">
-                        </div>
-                        <div class="mb-2 col-md-4">
-                            <label for="productEffectiveRange" class="form-label"><b>Effective Range <span class="text-danger">*</span></b></label>
-                            <input required type="text" class="form-control" name="productEffectiveRange" id="productEffectiveRange" value="<?php echo $fetch['effective_range']; ?>">
-                        </div>
-                        <div class="mb-2 col-md-4">
                             <label for="productWeight" class="form-label"><b>Weight <span class="text-danger">*</span></b></label>
                             <div class="input-group">
                                 <span class="input-group-text">gms</span>

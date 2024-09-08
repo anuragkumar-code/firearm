@@ -17,79 +17,36 @@ while ($imageRow = $imageResult->fetch_assoc()) {
 }
 
 ?>
-<style>
-    .child_img{
-        width: 70px!important;
-    }
 
-    .preview {
-        display: inline-block;
-        margin: 10px;
-    }
-
-    .preview img {
-        width: 100px;
-        height: 100px;
-        margin-right: 10px;
-    }
-
-    .preview-container {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .preview-container .preview {
-        flex: 1 0 45%; 
-        box-sizing: border-box;
-        margin-bottom: 10px;
-    }
-
-    .preview-container .preview img {
-        width: 70%;
-        height: auto;
-    }
-
-</style>
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
         <div class="col-sm-12 col-xl-12">
             <div class="bg-light text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Master Image</h6>
+                    <h6 class="mb-0">Upload Main Product Image</h6>
                 </div>
-
-                <div class="mb-3">
-                    <img style="width:100px" src="../admin/product_images/<?php echo $master_image ? $master_image : 'error.png'; ?>" alt="Master Image" style="width: 200px; height: auto;">
-                </div>
-
-                <form action="functions/product/update-master-image.php" method="post" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="mb-2 col-md-2">
+                <div class="master-image-container">
+                    <form action="functions/product/update-master-image.php" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
                             <label for="masterImage" class="form-label"><b>Upload<span class="text-danger">*</span></b></label>
-                        </div>
-                        <div class="col-md-4">
                             <input type="file" class="form-control" name="masterImage" id="masterImage" accept="image/*" required>
-                        </div>
-
-                        <div class="col-md-4">&nbsp;</div>
-                        
-                        <input type="hidden" name="product_id" value="<?php echo $get_id; ?>">
-                        <div class="col-md-2">
+                            <input type="hidden" name="product_id" value="<?php echo $get_id; ?>">
                             <button type="submit" class="btn btn-primary" name="uploadMasterImage" id="masterImage">Update</button>
                         </div>
-                    </div>
-                </form>  
-                
+                    </form>
+                    <img src="../admin/product_images/<?php echo $master_image ? $master_image : 'error.png'; ?>" alt="Master Image">
+
+                </div> 
             </div>
         </div>
-        
     </div>
 </div>
+
 
 <div class="container-fluid pt-4 px-4">
     <div class="bg-light text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Manage Child Images</h6>
+            <h6 class="mb-0">Manage Sub Product Images</h6>
             <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">+ Add Image</a>
         </div>
         <div class="table-responsive">
@@ -148,7 +105,7 @@ while ($imageRow = $imageResult->fetch_assoc()) {
                             <label for="image" class="form-label"><b>Select Images <span class="text-danger">*</span></b></label>
                         </div>
                         <div class="col-md-6">
-                            <input type="file" class="form-control" name="childImages[]" id="childImages" multiple="multiple">
+                            <input type="file" class="form-control" name="childImages[]" id="childImages" multiple="multiple" required>
                         </div>
                     </div>
                     

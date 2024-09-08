@@ -10,16 +10,14 @@ if (isset($_POST['updateProduct'])) {
     $model = $_POST['productModel'];
     $caliber = $_POST['productCaliber'];
     $price = $_POST['productPrice'];
-    $product_range = $_POST['productRange'];
-    $effective_range = $_POST['productEffectiveRange'];
     $weight = $_POST['productWeight'];
     $short_description = $_POST['productShortDesc'];
     $long_description = $_POST['productLongDesc'];
 
-    $updateProductQuery = "UPDATE `products` SET `category_id` = ?, `name` = ?, `manufacturer` = ?, `model` = ?, `caliber` = ?, `price` = ?, `product_range` = ?, `effective_range` = ?, `weight` = ?, `short_description` = ?, `long_description` = ? WHERE `id` = ?";
+    $updateProductQuery = "UPDATE `products` SET `category_id` = ?, `name` = ?, `manufacturer` = ?, `model` = ?, `caliber` = ?, `price` = ?,  `weight` = ?, `short_description` = ?, `long_description` = ? WHERE `id` = ?";
 
     if ($stmt = $conn->prepare($updateProductQuery)) {
-        $stmt->bind_param('sssssssssssi', $category_id, $name, $manufacturer, $model, $caliber, $price, $product_range, $effective_range, $weight, $short_description, $long_description, $product_id);
+        $stmt->bind_param('sssssssssi', $category_id, $name, $manufacturer, $model, $caliber, $price, $weight, $short_description, $long_description, $product_id);
 
         if ($stmt->execute()) {
             header('Location: ../../products.php');
