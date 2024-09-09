@@ -25,6 +25,43 @@ while($productImageData = $resultImage->fetch_assoc()){
 // echo "<pre>"; print_r($imageArr);exit;
 
 ?>
+<style>
+.gallery-thumbs {
+    max-height: 500px; 
+    overflow-y: hidden; 
+    overflow-x: hidden; 
+    padding-right: 10px; 
+    transition: overflow-y 0.3s ease; 
+}
+
+.gallery-thumbs:hover {
+    overflow-y: auto; 
+}
+
+.gallery-thumbs::-webkit-scrollbar {
+    width: 5px; 
+    background: transparent; 
+}
+
+.gallery-thumbs::-webkit-scrollbar-thumb {
+    background-color: #888; 
+    border-radius: 10px;
+}
+
+.gallery-thumbs:hover::-webkit-scrollbar-thumb {
+    background-color: #555; 
+}
+
+.gallery-thumbs {
+    scrollbar-width: none; 
+}
+
+.gallery-thumbs:hover {
+    scrollbar-width: thin; 
+}
+
+
+</style>
     <main id="main-content" class="position-relative">
         <section class="page-title position-relative">
             <div class="container">

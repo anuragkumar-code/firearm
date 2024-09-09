@@ -112,6 +112,28 @@
 
 
 <script type="text/javascript">
+
+    function showLoginAlert(name){
+        Swal.fire({
+            title: 'Welcome, '+name+'!',
+            text: 'Would you like to explore our product items?',
+            icon: 'info',  
+            confirmButtonText: 'Go to products',
+            showCancelButton: true,
+            cancelButtonText: 'Close',
+            reverseButtons: false, 
+            allowOutsideClick: false,
+            allowEscapeKey: false 
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'product.php'; 
+            }else if (result.dismiss === Swal.DismissReason.cancel) {
+                location.reload(); 
+            }
+        });
+
+    }
+
     function showLoginForm(){
         $('.alert').hide().find('strong').text('');
         $('#registerPopUp').modal('hide');
@@ -157,7 +179,8 @@
                     });
                 } else {
                     $('.alert').hide();
-                    window.location.href = "index.php";
+                    $('#loginPopUp').modal('hide');
+                    showLoginAlert(result.customer_name);
                 }
                 
             },

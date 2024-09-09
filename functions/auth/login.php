@@ -34,6 +34,7 @@ if ($res->num_rows == 1) {
             $_SESSION['customer_name'] = $user['name'];
 
             $result['error_login'] = false;
+            $result['customer_name'] = $_SESSION['customer_name'];
         } else {
             $result['error_login'] = true;
             $result['error_title'] = "Error";
