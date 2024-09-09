@@ -39,7 +39,7 @@ if ($resultRequests) {
 
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl-4">
                 <a href="products.php">
                     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-shopping-cart fa-2x text-primary"></i>
@@ -50,7 +50,7 @@ if ($resultRequests) {
                     </div>
                 </a>
             </div>
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl-4">
                 <a href="categories.php">
                     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-list fa-2x text-primary"></i>
@@ -61,7 +61,7 @@ if ($resultRequests) {
                     </div>
                 </a>
             </div>
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl-4">
                 <a href="customers.php">
                     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-users fa-2x text-primary"></i>
@@ -72,7 +72,7 @@ if ($resultRequests) {
                     </div>
                 </a>
             </div>
-            <div class="col-sm-6 col-xl-3">
+            <div class="col-sm-6 col-xl-3 d-none">
                 <a href="requests.php">
                     <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-clipboard-list fa-2x text-primary"></i>
@@ -88,21 +88,12 @@ if ($resultRequests) {
 
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
-            <div class="col-sm-12 col-xl-6">
+            <div class="col-sm-12 col-xl-12">
                 <div class="bg-light text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
                         <h6 class="mb-0">Monthly Customers</h6>
                     </div>
                     <canvas id="bar-chart"></canvas>
-                </div>
-            </div>
-
-            <div class="col-sm-12 col-xl-6">
-                <div class="bg-light text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Monthly Requests</h6>
-                    </div>
-                    <canvas id="line-chart"></canvas>
                 </div>
             </div>
         </div>

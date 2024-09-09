@@ -35,10 +35,6 @@ while ($imageRow = $imageResult->fetch_assoc()) {
                             </select>
                         </div>
                         <div class="mb-2 col-md-4">
-                            <label for="productName" class="form-label"><b>Name <span class="text-danger">*</span></b></label>
-                            <input required type="text" class="form-control" name="productName" id="productName" value="<?php echo $fetch['name']; ?>">
-                        </div>
-                        <div class="mb-2 col-md-4">
                             <label for="productManufacturer" class="form-label"><b>Manufacturer <span class="text-danger">*</span></b></label>
                             <input required type="text" class="form-control" name="productManufacturer" id="productManufacturer" value="<?php echo $fetch['manufacturer']; ?>">
                         </div>

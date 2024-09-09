@@ -62,6 +62,13 @@ while($contentData = $result->fetch_assoc()){
             font-weight: 900; 
         }
 
+        @media (max-width: 767px) { 
+            .logoSpan {
+                font-size: 18px; 
+                letter-spacing: 1px;
+            }
+        }
+
         .news {
             padding: 0 0;
             display: flex;
@@ -118,7 +125,8 @@ while($contentData = $result->fetch_assoc()){
         <nav class="navbar navbar-expand-xl">
             <div class="container">
                 <a class="navbar-brand p-0 m-0 d-xl-none" href="index.php">
-                    <img src="assets/images/logo.png" alt="logo">
+                    <!-- <img src="assets/images/logo.png" alt="logo"> -->
+                    <span class="logoSpan">Bullfrog Gun Clearance</span>
                 </a>
                 <div class="collapse navbar-collapse" id="navbar-right">
                     <ul class="navbar-nav">
@@ -157,7 +165,7 @@ while($contentData = $result->fetch_assoc()){
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="banner-left">
-                            <h6>Welcome to <span>Danny's Firearms</span></h6>
+                            <h6>Welcome to <span>Bullfrog Gun Clearance</span></h6>
                             <h2><?php echo $contentArr[0]['value']; ?></h2>
                             <p><?php echo $contentArr[1]['value']; ?></p>
                         </div>

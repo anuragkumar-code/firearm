@@ -62,6 +62,13 @@ function formatMobileNumber($mobile) {
             letter-spacing: 2px; 
             font-weight: 900; 
         }
+
+        @media (max-width: 767px) { 
+            .logoSpan {
+                font-size: 18px; 
+                letter-spacing: 1px;
+            }
+        }
     </style>
     <div
         class="loader-wrapper position-fixed inset-0 justify-content-center align-items-center z-[9999] h-screen w-full bg-white">
@@ -99,8 +106,8 @@ function formatMobileNumber($mobile) {
     <header class="header-light">
         <nav class="navbar navbar-expand-xl">
             <div class="container">
-                <a class="navbar-brand p-0 m-0 d-xl-none" href="index.html">
-                    <img src="assets/images/logo-black.png" alt="logo">
+                <a class="navbar-brand p-0 m-0 d-xl-none" href="index.php">
+                    <span class="logoSpan">Bullfrog Gun Clearance</span>
                 </a>
                 <div class="collapse navbar-collapse" id="navbar-right">
                     <ul class="navbar-nav">
