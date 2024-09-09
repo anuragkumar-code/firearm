@@ -148,12 +148,12 @@
             } ,
             success: function(response){
                 var result = JSON.parse(response);
-
+ 
                 if (result.error_login) {
                     Swal.fire({
                         icon: 'info',
-                        title: 'Account Pending Approval',
-                        text: 'Sorry, your account is not yet verified by our admins. We will notify you once it gets verified. Thank you.',
+                        title: result.error_title,
+                        text: result.error,
                     });
                 } else {
                     $('.alert').hide();

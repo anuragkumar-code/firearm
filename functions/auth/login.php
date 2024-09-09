@@ -36,14 +36,17 @@ if ($res->num_rows == 1) {
             $result['error_login'] = false;
         } else {
             $result['error_login'] = true;
+            $result['error_title'] = "Error";
             $result['error'] = "Invalid password !";
         }
     } else {
         $result['error_login'] = true;
+        $result['error_title'] = "Warning";
         $result['error'] = "Sorry, your account is not yet verified by our admins. We will notify you once it gets verified. Thank you.";
     }
 } else {
     $result['error_login'] = true;
+    $result['error_title'] = 'Warning';
     $result['error'] = "No user found with this email !";
 }
 
