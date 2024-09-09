@@ -62,6 +62,23 @@ while($contentData = $result->fetch_assoc()){
             font-weight: 900; 
         }
 
+        .news {
+            padding: 0 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .news .col-md-6:first-child {
+            flex: 1;
+            height: 100%;
+            padding: 0; 
+        }
+
+        .news img {
+            width: 100%;
+            height: 100%; 
+            object-fit: cover; 
+        }
 
     </style>
     <div class="loader-wrapper position-fixed inset-0 justify-content-center align-items-center z-[9999] h-screen w-full bg-white">
@@ -74,7 +91,6 @@ while($contentData = $result->fetch_assoc()){
                 </div>
                 <div>
                     <a class="navbar-brand p-0 d-none d-xl-block" href="index.html">
-                        <!-- <img src="assets/images/logo.png" alt="logo"> -->
                         <span class="logoSpan">Bullfrog Gun Clearance</span>
                     </a>
                 </div>
@@ -222,10 +238,17 @@ while($contentData = $result->fetch_assoc()){
             </div>
         </section>
         <section class="news inner-gap">
-            <div class="container">
-                <div class="title-group text-center">
-                    <h2 class="sub-title"><?php echo $contentArr[4]['value']; ?></h2>
-                    <p><?php echo $contentArr[5]['value']; ?></p>
+            <div class="container-fluid">
+                <div class="row no-gutters align-items-center" style="height: 100%;">
+                    <div class="col-md-6" style="height: 100%;">
+                        <img src="assets/images/safety.jpg" alt="Safety Commitment" class="img-fluid">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="title-group text-center">
+                            <h2 class="sub-title"><?php echo $contentArr[4]['value']; ?></h2>
+                            <p><?php echo $contentArr[5]['value']; ?></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>        

@@ -42,7 +42,7 @@ while($contentAboutData = $result->fetch_assoc()){
             </div>
         </div>
     </section>
-
+    
     <section class="our-values-section inner-gap">
         <div class="container">
             <div class="row">
