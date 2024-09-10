@@ -79,7 +79,7 @@ while($contentAdminData = $result->fetch_assoc()){
                 </div>
             </div>
             
-            <div class="col-sm-12 col-xl-12">
+            <div class="col-sm-12 col-xl-12 d-none">
                 <div class="bg-light rounded h-100 p-4">
                     <h6 class="mb-4">Update How To Order Text</h6>
                     <?php if($success_how_type == 1){ ?>

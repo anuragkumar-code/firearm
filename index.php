@@ -87,6 +87,55 @@ while($contentData = $result->fetch_assoc()){
             object-fit: cover; 
         }
 
+        .how-order {
+    padding: 2rem 0;
+}
+
+.how-order-left img {
+    max-width: 100%;
+    height: auto;
+}
+
+.sub-title {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.highlight-text {
+    color: #00e0ff; /* Adjust color as needed */
+    margin-bottom: 1rem;
+}
+
+.how-it-works-list {
+    list-style: none; /* Remove default list styling */
+    padding: 0;
+    margin: 0;
+}
+
+.how-it-works-list li {
+    position: relative;
+    padding-left: 2.5rem; /* Space for the image */
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+
+
+.primary-btn {
+    background-color: #007bff; /* Adjust color as needed */
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+.primary-btn i {
+    margin-left: 0.5rem;
+}
+
+
+
     </style>
     <div class="loader-wrapper position-fixed inset-0 justify-content-center align-items-center z-[9999] h-screen w-full bg-white">
         <div class="loader"></div>
@@ -173,6 +222,7 @@ while($contentData = $result->fetch_assoc()){
                 </div>
             </div>
         </section>
+        
         <section class="how-order primary-bg inner-gap">
             <div class="container">
                 <div class="row align-items-center gy-3">
@@ -183,9 +233,24 @@ while($contentData = $result->fetch_assoc()){
                     </div>
                     <div class="col-lg-6">
                         <div class="d-flex flex-column gap-3 gap-md-4">
-                            <h2 class="sub-title mb-0">HOW TO ORDER</h2>
-                            <h4 class="highlight-text"><?php echo $contentArr[2]['value']; ?></h4>
-                            <p><?php echo $contentArr[3]['value']; ?></p>
+                            <h2 class="sub-title mb-0 highlight-text">HOW IT WORKS</h2>
+                            <ol class="how-it-works-list">
+                                <li>
+                                    <span><i style="color:black" class="fa-solid fa-user-plus"></i></span> <b>Create an Account:</b> Sign up to get started.
+                                </li>
+                                <li>
+                                    <span><i style="color:black" class="fa-solid fa-check-circle"></i></span> <b>Get Approved:</b> We'll review your account for approval.
+                                </li>
+                                <li>
+                                    <span><i style="color:black" class="fa-solid fa-search"></i></span> <b>Browse Products:</b> Explore our available product items.
+                                </li>
+                                <li>
+                                    <span><i style="color:black" class="fa-solid fa-comment-dots"></i></span> <b>Express Interest:</b> Send an SMS with the details of the product you’re interested in.
+                                </li>
+                                <li>
+                                    <span><i style="color:black" class="fa-solid fa-phone"></i></span> <b>Connect with Us:</b> Our team will contact you to discuss the next steps.
+                                </li>
+                            </ol>
                             <div class="d-flex align-items-center gap-3 gap-lg-4 d-none">
                                 <h3>$775.00</h3>
                                 <a href="#" class="primary-btn">BUY NOW <i class="fa-solid fa-arrow-right"></i></a>
@@ -195,13 +260,15 @@ while($contentData = $result->fetch_assoc()){
                 </div>
             </div>
         </section>
+
+
         <section class="new-arrival inner-gap">
             <div class="container">
                 <div class="row justify-content-center m-0">
                     <div class="col-sm-6 col-lg-4 col-xl-3 bg-white border-right card-1">
                         <div class="new-arrival-card">
                             <div>
-                                <img src="assets/images/reward.png" alt="">
+                                <i style="color:#9266ff" class="fa-solid fa-star fa-3x"></i>
                             </div>
                             <div class="arrival-content">
                                 <h3>TOP QUALITY</h3>
@@ -212,10 +279,10 @@ while($contentData = $result->fetch_assoc()){
                     <div class="col-sm-6 col-lg-4 col-xl-3 bg-white border-right card-2">
                         <div class="new-arrival-card">
                             <div>
-                                <img src="assets/images/money.png" alt="">
+                                <i style="color:#ff9d66" class="fa-solid fa-tag fa-3x"></i>
                             </div>
                             <div class="arrival-content">
-                                <h3>BEST PRICE</h3>
+                                <h3>COMPETITIVE PRICE</h3>
                                 <p class="d-none">Lorem ipsum dolor sit amet</p>
                             </div>
                         </div>
@@ -223,10 +290,10 @@ while($contentData = $result->fetch_assoc()){
                     <div class="col-sm-6 col-lg-4 col-xl-3 bg-white border-right card-3">
                         <div class="new-arrival-card">
                             <div>
-                                <img src="assets/images/cart.png" alt="">
+                                <i style="color:#2c96ff" class="fa-solid fa-shield-alt fa-3x"></i>
                             </div>
                             <div class="arrival-content">
-                                <h3>100% SECURE SHOPPING</h3>
+                                <h3>SAFETY</h3>
                                 <p class="d-none">Lorem ipsum dolor sit amet</p>
                             </div>
                         </div>
@@ -234,10 +301,10 @@ while($contentData = $result->fetch_assoc()){
                     <div class="col-sm-6 col-lg-4 col-xl-3 bg-white">
                         <div class="new-arrival-card">
                             <div>
-                                <img src="assets/images/truck.png" alt="">
+                                <i style="color:#ffb743" class="fa-solid fa-briefcase fa-3x"></i>
                             </div>
                             <div class="arrival-content">
-                                <h3>FAST SHIPPING</h3>
+                                <h3>PROFESSIONALISM</h3>
                                 <p class="d-none">Lorem ipsum dolor sit amet</p>
                             </div>
                         </div>
