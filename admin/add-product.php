@@ -19,41 +19,47 @@
                                 </select>
                             </div>
                             <div class="mb-2 col-md-4">
+                                <label for="typeOfProduct" class="form-label"><b>Type Of Product <span class="text-danger">*</span></b></label>
+                                <select class="form-select mb-3" name="typeOfProduct" id="typeOfProduct" required>
+                                    <option label="Select type"></option>
+                                    <option value="New">New</option>
+                                    <option value="Old">Old</option>
+                                </select>
+                            </div>
+                            <div class="mb-2 col-md-4">
+                                <label for="inventoryNumber" class="form-label"><b>Inventory No. <span class="text-danger">*</span></b></label>
+                                <div class="input-group">
+                                    <input required type="text" class="form-control" name="inventoryNumber" id="inventoryNumber">
+                                </div>
+                            </div>
+                            <div class="mb-2 col-md-4">
                                 <label for="productManufacturer" class="form-label"><b>Manufacturer <span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="productManufacturer" id="productManufacturer">
+                                <input required type="text" class="form-control" name="productManufacturer" id="productManufacturer" placeholder="Enter the name of manufacturer">
                             </div>
                             <div class="mb-2 col-md-4">
                                 <label for="productModel" class="form-label"><b>Model <span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="productModel" id="productModel">
+                                <input required type="text" class="form-control" name="productModel" id="productModel" placeholder="Enter the name of model">
                             </div>
                             <div class="mb-2 col-md-4">
                                 <label for="productCaliber" class="form-label"><b>Caliber <span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="productCaliber" id="productCaliber">
+                                <input required type="text" class="form-control" name="productCaliber" id="productCaliber" placeholder="Enter the name of model">
                             </div>
                             <div class="mb-2 col-md-4">
                                 <label for="productPrice" class="form-label"><b>Price <span class="text-danger">*</span></b></label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
-                                    <input required type="text" class="form-control" name="productPrice" id="productPrice">
+                                    <input required type="text" class="form-control" name="productPrice" id="productPrice" placeholder="Enter the price">
                                 </div>
                             </div>
                             
                             <div class="mb-2 col-md-4">
-                                <label for="productWeight" class="form-label"><b>Weight <span class="text-danger">*</span></b></label>
-                                <div class="input-group">
-                                    <span class="input-group-text">gms</span>
-                                    <input required type="text" class="form-control" name="productWeight" id="productWeight">
-                                </div>
-                            </div>
-
-                            <div class="mb-2 col-md-4">
                                 <label for="productShortDesc" class="form-label"><b>Short Description <span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="productShortDesc" id="productShortDesc">
+                                <input required type="text" class="form-control" name="productShortDesc" id="productShortDesc" placeholder="Enter short description">
                             </div>
 
                             <div class="mb-2 col-md-8">
                                 <label for="productLongDesc" class="form-label"><b>Long Description <span class="text-danger">*</span></b></label>
-                                <textarea class="form-control" name="productLongDesc" id="productLongDesc"></textarea>
+                                <textarea class="form-control" name="productLongDesc" id="productLongDesc" placeholder="Enter long description..."></textarea>
                             </div>
                             
                         </div>

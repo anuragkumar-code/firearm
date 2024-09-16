@@ -111,6 +111,7 @@ while($productImageData = $resultImage->fetch_assoc()){
                     <div class="col-lg-6">
                         <div class="d-flex flex-column align-items-start gap-3">
                             <h2 class="product-title"><?php echo $productData['manufacturer']; ?></h2>
+                            <h5 class="order-id"><b>Inventory No. : </b><?php echo $productData['inventory_number']; ?></h5>
                             <h5 class="order-id"><?php echo $productData['short_description']; ?></h5>
                             <p><?php echo $productData['long_description']; ?></p>
                             <div class="row mt-3">
@@ -132,15 +133,17 @@ while($productImageData = $resultImage->fetch_assoc()){
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-md-12 mb-3">
                                     <div class="d-flex align-items-center">
-                                        <i class="fa-solid fa-weight-hanging fa-2x me-3"></i>
+                                        <i class="fa-solid fa-box fa-2x me-3"></i>
                                         <div>
-                                            <h5><b>Weight</b></h5>
-                                            <p class="mb-0"><?php echo $productData['weight']; ?></p>
+                                            <h5><b>Type of Product</b></h5>
+                                            <p class="mb-0"><?php echo $productData['type_of_component']; ?></p>
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                             <h2 class="product-price"><span>$<?php echo $productData['price']; ?></span></h2>
                             <div class="d-flex gap-3">

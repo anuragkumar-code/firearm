@@ -4,18 +4,19 @@ include ('../../../config/db.php');
 if(isset($_POST['addProduct'])){
 
     $category_id = $_POST['productCategory'];
-    $manufacturer = $_POST['productManufacturer'];
+    $type_of_component = $_POST['typeOfProduct'];
+    $inventory_number = $_POST['inventoryNumber'];
+    $manufacturer = $_POST['productManufacturer']; 
     $model = $_POST['productModel'];
     $caliber = $_POST['productCaliber'];
     $price = $_POST['productPrice'];
-    $weight = $_POST['productWeight'];
     $short_description = $_POST['productShortDesc'];
     $long_description = $_POST['productLongDesc'];
 
-    $insertProductQuery = "INSERT INTO `products` (`category_id`, `manufacturer`, `model`, `caliber`, `price`, `weight`, `short_description`, `long_description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $insertProductQuery = "INSERT INTO `products` (`category_id`, `type_of_component`, `inventory_number`,`manufacturer`, `model`, `caliber`, `price`, `short_description`, `long_description`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     if ($stmt = $conn->prepare($insertProductQuery)) {
-        $stmt->bind_param('ssssssss', $category_id, $manufacturer, $model, $caliber, $price, $weight, $short_description, $long_description);
+        $stmt->bind_param('sssssssss', $category_id, $type_of_component, $inventory_number, $manufacturer, $model, $caliber, $price, $short_description, $long_description);
 
         if ($stmt->execute()) {
             $last_id = base64_encode($conn->insert_id);
