@@ -52,10 +52,10 @@ while($contentAboutData = $result->fetch_assoc()){
                 <div class="col-lg-4">
                     <div class="value-card d-flex align-items-start gap-2 mb-3 mb-xl-4">
                         <div class="flex-shrink-0">
-                            <img src="assets/images/target.png" alt="Quality Icon">
+                            <i class="fa fa-star" aria-hidden="true"></i>
                         </div>
                         <div>
-                            <h6>Quality</h6>
+                            <h6><b>Quality</b></h6>
                             <p><?php echo $contentAboutArr[1]['value']; ?></p>
                         </div>
                     </div>
@@ -63,10 +63,10 @@ while($contentAboutData = $result->fetch_assoc()){
                 <div class="col-lg-4">
                     <div class="value-card d-flex align-items-start gap-2 mb-3 mb-xl-4">
                         <div class="flex-shrink-0">
-                            <img src="assets/images/target.png" alt="Safety Icon">
+                            <i class="fa fa-shield-alt" aria-hidden="true"></i>
                         </div>
                         <div>
-                            <h6>Safety</h6>
+                            <h6><b>Safety</b></h6>
                             <p><?php echo $contentAboutArr[2]['value']; ?></p>
                         </div>
                     </div>
@@ -74,10 +74,10 @@ while($contentAboutData = $result->fetch_assoc()){
                 <div class="col-lg-4">
                     <div class="value-card d-flex align-items-start gap-2">
                         <div class="flex-shrink-0">
-                            <img src="assets/images/target.png" alt="Customer Service Icon">
+                            <i class="fa fa-headset" aria-hidden="true"></i>
                         </div>
                         <div>
-                            <h6>Customer Service</h6>
+                            <h6><b>Customer Service</b></h6>
                             <p><?php echo $contentAboutArr[3]['value']; ?></p>
                         </div>
                     </div>

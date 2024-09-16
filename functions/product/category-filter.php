@@ -34,10 +34,10 @@ while ($productRow = $productsResult->fetch_assoc()) {
         $html .= '          <span class="product-badge">new</span>';
     }
     $html .= '          <div class="product-img">';
-    $html .= '              <img src="admin/product_images/' . htmlspecialchars($productRow['master_image']) . '" alt="' . htmlspecialchars($productRow['name']) . '">';
+    $html .= '              <img src="admin/product_images/' . htmlspecialchars($productRow['master_image']) . '" alt="' . htmlspecialchars($productRow['manufacturer']) . '">';
     $html .= '          </div>';
     $html .= '          <div class="product-content d-flex justify-content-between align-items-center mb-4">';
-    $html .= '              <span><b>' . htmlspecialchars($productRow['name']) . '</b></span>';
+    $html .= '              <span><b>' . htmlspecialchars($productRow['manufacturer']) . '</b></span>';
     $html .= '              <span><b>$' . htmlspecialchars($productRow['price']) . '</b></span>';
     $html .= '          </div>';
     $html .= '          <div class="view-product-button mt-1">View Product</div>';
@@ -50,17 +50,43 @@ while ($productRow = $productsResult->fetch_assoc()) {
 $totalPages = ceil($totalProducts / $limit);
 $pagination = '';
 
+$range = 2; 
+$start = max(1, $page - $range);
+$end = min($totalPages, $page + $range);
+
 if ($page > 1) {
-    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(1)"><</a></li>';
+    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(1)">«</a></li>';
 }
 
-for ($i = 1; $i <= $totalPages; $i++) {
+if ($page > 1) {
+    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(' . ($page - 1) . ')">‹</a></li>';
+}
+
+if ($start > 1) {
+    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(1)">1</a></li>';
+    if ($start > 2) {
+        $pagination .= '<li class="page-item disabled"><span class="page-link">...</span></li>';
+    }
+}
+
+for ($i = $start; $i <= $end; $i++) {
     $active = $page == $i ? 'active' : '';
     $pagination .= '<li class="page-item"><a class="page-link ' . $active . '" href="javascript:void(0);" onclick="goToPage(' . $i . ')">' . $i . '</a></li>';
 }
 
+if ($end < $totalPages) {
+    if ($end < $totalPages - 1) {
+        $pagination .= '<li class="page-item disabled"><span class="page-link">...</span></li>';
+    }
+    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(' . $totalPages . ')">' . $totalPages . '</a></li>';
+}
+
 if ($page < $totalPages) {
-    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(' . $totalPages . ')">></a></li>';
+    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(' . ($page + 1) . ')">›</a></li>';
+}
+
+if ($page < $totalPages) {
+    $pagination .= '<li class="page-item"><a class="page-link" href="javascript:void(0);" onclick="goToPage(' . $totalPages . ')">»</a></li>';
 }
 
 echo json_encode(['html' => $html, 'pagination' => $pagination]);

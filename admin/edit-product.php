@@ -35,13 +35,23 @@ while ($imageRow = $imageResult->fetch_assoc()) {
                             </select>
                         </div>
                         <div class="mb-2 col-md-4">
-                            <label for="productName" class="form-label"><b>Name <span class="text-danger">*</span></b></label>
-                            <input required type="text" class="form-control" name="productName" id="productName" value="<?php echo $fetch['name']; ?>">
-                        </div>
-                        <div class="mb-2 col-md-4">
                             <label for="productManufacturer" class="form-label"><b>Manufacturer <span class="text-danger">*</span></b></label>
                             <input required type="text" class="form-control" name="productManufacturer" id="productManufacturer" value="<?php echo $fetch['manufacturer']; ?>">
                         </div>
+                        <div class="mb-2 col-md-4">
+                                <label for="typeOfProduct" class="form-label"><b>Type Of Product <span class="text-danger">*</span></b></label>
+                                <select class="form-select mb-3" name="typeOfProduct" id="typeOfProduct" required>
+                                    <option label="Select type"></option>
+                                    <option <?php if($fetch['type_of_component'] == 'New'){ echo "selected"; } ?> value="New">New</option>
+                                    <option <?php if($fetch['type_of_component'] == 'Old'){ echo "selected"; } ?> value="Old">Old</option>
+                                </select>
+                            </div>
+                            <div class="mb-2 col-md-4">
+                                <label for="inventoryNumber" class="form-label"><b>Inventory No. <span class="text-danger">*</span></b></label>
+                                <div class="input-group">
+                                    <input required type="text" class="form-control" name="inventoryNumber" id="inventoryNumber" value="<?php echo $fetch['inventory_number']; ?>">
+                                </div>
+                            </div>
                         <div class="mb-2 col-md-4">
                             <label for="productModel" class="form-label"><b>Model <span class="text-danger">*</span></b></label>
                             <input required type="text" class="form-control" name="productModel" id="productModel" value="<?php echo $fetch['model']; ?>">
@@ -57,13 +67,7 @@ while ($imageRow = $imageResult->fetch_assoc()) {
                                 <input required type="text" class="form-control" name="productPrice" id="productPrice" value="<?php echo $fetch['price']; ?>">
                             </div>
                         </div>
-                        <div class="mb-2 col-md-4">
-                            <label for="productWeight" class="form-label"><b>Weight <span class="text-danger">*</span></b></label>
-                            <div class="input-group">
-                                <span class="input-group-text">gms</span>
-                                <input required type="text" class="form-control" name="productWeight" id="productWeight" value="<?php echo $fetch['weight']; ?>">
-                            </div>
-                        </div>
+                        
                         <div class="mb-2 col-md-4">
                             <label for="productShortDesc" class="form-label"><b>Short Description <span class="text-danger">*</span></b></label>
                             <input required type="text" class="form-control" name="productShortDesc" id="productShortDesc" value="<?php echo $fetch['short_description']; ?>">

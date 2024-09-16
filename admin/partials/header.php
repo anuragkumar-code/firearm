@@ -66,17 +66,16 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="index.php" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                <a href="dashboard.php" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>BFG Admin</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <span class="rounded-circle" alt="" style="width: 40px; height: 40px;"><i class="fa fa-user fa-2x"></i></span>
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
+                        <h6 class="mb-0">Admin</h6>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
@@ -84,7 +83,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="categories.php" class="nav-item nav-link <?php echo ($currentPage == 'categories.php') ? 'active' : ''; ?>"><i class="fa fa-tag me-2"></i>Categories</a>
                     <a href="products.php" class="nav-item nav-link <?php echo ($currentPage == 'products.php') ? 'active' : ''; ?>"><i class="fa fa-box me-2"></i>Products</a>
                     <a href="customers.php" class="nav-item nav-link <?php echo ($currentPage == 'customers.php') ? 'active' : ''; ?>"><i class="fa fa-users me-2"></i>Customers</a>
-                    <a href="requests.php" class="nav-item nav-link <?php echo ($currentPage == 'requests.php') ? 'active' : ''; ?>"><i class="fa fa-file me-2"></i>Requests</a>
+                    <!-- <a href="requests.php" class="nav-item nav-link <?php //echo ($currentPage == 'requests.php') ? 'active' : ''; ?>"><i class="fa fa-file me-2"></i>Requests</a> -->
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Content</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -101,8 +100,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="dashboard.php" class="navbar-brand d-flex d-lg-none me-4 d-none">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0" style="margin-right: 5px;">
+                    <i class="fa fa-bars"></i>
                 </a>
                 <a href="javascript:history.back()" class="btn btn-info btn-circle" title="Go Back">
                     <i class="fa fa-arrow-left"></i>
@@ -110,8 +112,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="rounded-circle" alt="" style="width: 40px; height: 40px;"><i class="fa fa-user fa-2x"></i></span>
+                            <span class="d-lg-inline-flex">Admin</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="settings.php" class="dropdown-item">Settings</a>

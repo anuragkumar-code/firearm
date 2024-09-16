@@ -110,10 +110,10 @@ while($productImageData = $resultImage->fetch_assoc()){
                     </div>
                     <div class="col-lg-6">
                         <div class="d-flex flex-column align-items-start gap-3">
-                            <h2 class="product-title"><?php echo $productData['name']; ?></h2>
+                            <h2 class="product-title"><?php echo $productData['manufacturer']; ?></h2>
+                            <h5 class="order-id"><b>Inventory No. : </b><?php echo $productData['inventory_number']; ?></h5>
                             <h5 class="order-id"><?php echo $productData['short_description']; ?></h5>
                             <p><?php echo $productData['long_description']; ?></p>
-
                             <div class="row mt-3">
                                 <div class="col-md-12 mb-3">
                                     <div class="d-flex align-items-center">
@@ -133,24 +133,21 @@ while($productImageData = $resultImage->fetch_assoc()){
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-md-12 mb-3">
                                     <div class="d-flex align-items-center">
-                                        <i class="fa-solid fa-weight-hanging fa-2x me-3"></i>
+                                        <i class="fa-solid fa-box fa-2x me-3"></i>
                                         <div>
-                                            <h5><b>Weight</b></h5>
-                                            <p class="mb-0"><?php echo $productData['weight']; ?></p>
+                                            <h5><b>Type of Product</b></h5>
+                                            <p class="mb-0"><?php echo $productData['type_of_component']; ?></p>
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                             <h2 class="product-price"><span>$<?php echo $productData['price']; ?></span></h2>
                             <div class="d-flex gap-3">
-                                <ul class="quantity-selector">
-                                    <li class="entry number-minus"><i class="fas fa-minus"></i></li>
-                                    <li class="entry number" id="p_quantity">1</li>
-                                    <li class="entry number-plus"><i class="fas fa-plus"></i></li>
-                                </ul>
-                                <a href="javascript:void(0)" onclick="showRequestPopup()" class="primary-btn">Send Request</a>
+                                <a href="javascript:void(0)" class="primary-btn"><i class="fa fa-message"></i><?php echo $mobile; ?> (Text Only)</a>
                             </div>
                         </div>
                     </div>
@@ -191,7 +188,7 @@ while($productImageData = $resultImage->fetch_assoc()){
                                         <img src="admin/product_images/<?php echo $valueCat['master_image']; ?>" alt="">
                                     </div>
                                     <div class="product-content d-flex justify-content-between align-items-center mb-4">
-                                        <h6><?php echo $valueCat['name']; ?></h6>
+                                        <h6><?php echo $valueCat['manufacturer']; ?></h6>
                                         <h4>$ <?php echo $valueCat['price'] ?></h4>
                                     </div>
                                     <div class="view-product-button mt-1">View Product</div>
@@ -205,89 +202,4 @@ while($productImageData = $resultImage->fetch_assoc()){
     </main>
     
 
-<div class="modal fade" id="requestPopup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Send Request</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-		<div class="alert alert-danger mg-b-0" role="alert" style="display: none;">
-			<strong></strong>
-		</div>
-        <form method="POST">
-          <div class="row gy-3 gy-sm-4">
-            <div class="col-12">
-              <div class="form-floating">
-                <textarea class="form-control" name="requestMsg" id="requestMsg" placeholder="Enter your message"></textarea>
-                <label for="request">Enter your request message</label>
-              </div>
-            </div>
-
-            <div class="col-12" style="margin-top: 5px!important;">
-                <div class="form-floating">
-                    <span>Please enter short request message to the admin.</span>
-                </div>
-            </div>
-            <div class="col-12">
-              <a href="javascript:void(0)" onclick="sendRequest()" class="primary-btn w-100 btn btn-primary">Send</a>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-    <script>
-
-        function sendRequest(){
-
-            var quantity = $('#p_quantity').html();
-            var message = $('#requestMsg').val();
-
-            if (!message.trim()) {
-                $('.alert').show().find('strong').text('Request message cannot be empty.');
-                return; 
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: 'functions/product/send-request.php',
-                data: {
-                    quantity:quantity,
-                    message:message,
-                    customer:<?php echo $_SESSION['customer_id']; ?>,
-                    product:<?php echo $get_id; ?>,
-                } ,
-                success: function(response){
-                    if (response == true) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Request Sent',
-                            text: 'Request sent to the admin. Admin will contact you soon.',
-                        }).then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Error sending request. Please try again later.',
-                        }).then(() => {
-                            location.reload();
-                        });
-                    }
-                }
-            });
-
-        }
-
-
-        function showRequestPopup(){
-            $('#requestPopup').modal('show');
-        }
-
-    </script>
 <?php include('partials/footer.php'); ?>

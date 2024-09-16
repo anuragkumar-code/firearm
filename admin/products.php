@@ -10,7 +10,6 @@
                     <thead>
                         <tr class="text-dark">
                             <th scope="col">S. No.</th>
-                            <th scope="col">Name</th>
                             <th scope="col">Manufacturer</th>
                             <th scope="col">Caliber</th>
                             <th scope="col">Price</th>
@@ -30,7 +29,6 @@
 					    ?>
                     <tr>
                         <td><?php echo $sno; ?></td>
-                        <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['manufacturer']; ?></td>
                         <td><?php echo $row['caliber']; ?></td>
                         <td><?php echo $row['price']; ?></td>
