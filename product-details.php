@@ -60,6 +60,26 @@ while($productImageData = $resultImage->fetch_assoc()){
     scrollbar-width: thin; 
 }
 
+.fixed-flag {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; 
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    z-index: 1000; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.fixed-flag:hover {
+    background-color: #0056b3;
+}
+
+
+
 
 </style>
     <main id="main-content" class="position-relative">
@@ -110,6 +130,7 @@ while($productImageData = $resultImage->fetch_assoc()){
                     </div>
                     <div class="col-lg-6">
                         <div class="d-flex flex-column align-items-start gap-3">
+                            
                             <h2 class="product-title"><?php echo $productData['manufacturer']; ?></h2>
                             <h5 class="order-id"><b>Inventory No. : </b><?php echo $productData['inventory_number']; ?></h5>
                             <h5 class="order-id"><?php echo $productData['short_description']; ?></h5>
@@ -149,6 +170,7 @@ while($productImageData = $resultImage->fetch_assoc()){
                             <div class="d-flex gap-3">
                                 <a href="javascript:void(0)" class="primary-btn"><i class="fa fa-message"></i><?php echo $mobile; ?> (Text Only)</a>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -176,7 +198,7 @@ while($productImageData = $resultImage->fetch_assoc()){
                             $interval = $currentDate->diff($createdDate);
                             $daysDifference = $interval->days;
                             $isNew = $daysDifference <= 10;
-
+                        
                         ?>
                         <div class="col-sm-6 col-lg-4 col-xl-3">
                             <a href="product-details.php?id=<?php echo base64_encode($valueCat['id']); ?>">
@@ -199,6 +221,10 @@ while($productImageData = $resultImage->fetch_assoc()){
                 </div>
             </div>
         </section>
+
+        <div class="fixed-flag">
+            <strong>For questions or online inquiries, text 662 393 7740</strong>
+        </div>
     </main>
     
 
