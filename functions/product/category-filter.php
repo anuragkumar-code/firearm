@@ -34,7 +34,10 @@ while ($productRow = $productsResult->fetch_assoc()) {
         $html .= '          <span class="product-badge">new</span>';
     }
     $html .= '          <div class="product-img">';
-    $html .= '              <img src="admin/product_images/' . htmlspecialchars($productRow['master_image']) . '" alt="' . htmlspecialchars($productRow['manufacturer']) . '">';
+
+    $imageSrc = !empty($productRow['master_image']) ? 'admin/product_images/' . htmlspecialchars($productRow['master_image']) : 'admin/product_images/error.png';
+    
+    $html .= '              <img src="' . $imageSrc . '" alt="' . htmlspecialchars($productRow['manufacturer']) . '">';
     $html .= '          </div>';
     $html .= '          <div class="product-content d-flex justify-content-between align-items-center mb-4">';
     $html .= '              <span><b>' . htmlspecialchars($productRow['manufacturer']) . '</b></span>';

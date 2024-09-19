@@ -23,13 +23,13 @@
                                 <select class="form-select mb-3" name="typeOfProduct" id="typeOfProduct" required>
                                     <option label="Select type"></option>
                                     <option value="New">New</option>
-                                    <option value="Old">Old</option>
+                                    <option value="Used">Used</option>
                                 </select>
                             </div>
                             <div class="mb-2 col-md-4">
                                 <label for="inventoryNumber" class="form-label"><b>Inventory No. <span class="text-danger">*</span></b></label>
                                 <div class="input-group">
-                                    <input required type="text" class="form-control" name="inventoryNumber" id="inventoryNumber">
+                                    <input required type="text" class="form-control" placeholder="Enter inventory number" name="inventoryNumber" id="inventoryNumber">
                                 </div>
                             </div>
                             <div class="mb-2 col-md-4">
