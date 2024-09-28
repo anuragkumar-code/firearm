@@ -9,7 +9,7 @@
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-dark">
-                            <th scope="col">S. No.</th>
+                            <th scope="col">Inventory No.</th>
                             <th scope="col">Manufacturer</th>
                             <th scope="col">Caliber</th>
                             <th scope="col">Price</th>
@@ -25,10 +25,9 @@
 					    $sno = '';
 					    if ($result->num_rows > 0) {
 					    	while($row = $result->fetch_assoc()) {
-					    		$sno++;
 					    ?>
                     <tr>
-                        <td><?php echo $sno; ?></td>
+                        <td><?php echo $row['inventory_number']; ?></td>
                         <td><?php echo $row['manufacturer']; ?></td>
                         <td><?php echo $row['caliber']; ?></td>
                         <td><?php echo $row['price']; ?></td>

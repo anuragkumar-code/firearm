@@ -51,9 +51,17 @@
             <div class="col-12">
               <div class="form-floating">
                 <input type="text" class="form-control" name="address_one" id="address_one" placeholder="Enter address line one" required>
-                <label for="address_one">Enter your address line one</label>
+                <label for="address_one">Enter your address</label>
               </div>
             </div>
+
+            <div class="col-12">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="ageAgreement" name="age_agreement" value="1" required>
+                <label class="form-check-label" for="ageAgreement" style="color:red"><b>I agree my age is 21 years or above.</b></label>
+              </div>
+            </div>
+
             <div class="col-12">
                 <div class="form-floating">
                     <span><b>Already registered with us ? <a href="javascript:void(0)" onclick="showLoginForm()">Login Now</a></b></span>
@@ -219,6 +227,7 @@
         var phone = $('#registerPhone').val();
         var password = $('#registerPassword').val();
         var confirmPassword = $('#confirmPassword').val();
+        var ageAgreement = $('#ageAgreement').is(':checked') ? 1 : 0;
 
         var address_one = $('#address_one').val();
 
@@ -265,6 +274,11 @@
             return;
         }
 
+        if (!ageAgreement) {
+            showError('Please confirm your age.');
+            return;
+        }
+
         $.ajax({
             type: 'POST',
             url: 'functions/auth/register.php',
@@ -274,6 +288,7 @@
                 phone:phone,
                 password:password,
                 address_one:address_one,
+                age_agreement: ageAgreement
             } ,
             success: function(response){
                 var result = JSON.parse(response);
