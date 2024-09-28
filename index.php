@@ -28,7 +28,7 @@ while($contentData = $result->fetch_assoc()){
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Armaments - Online Gun Shop</title>
+    <title>Bull Frog Clearance</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
@@ -88,55 +88,54 @@ while($contentData = $result->fetch_assoc()){
         }
 
         .how-order {
-    padding: 2rem 0;
-}
+            padding: 2rem 0;
+        }
 
-.how-order-left img {
-    max-width: 100%;
-    height: auto;
-}
+        .how-order-left img {
+            max-width: 100%;
+            height: auto;
+        }
 
-.sub-title {
-    font-size: 1.5rem;
-    color: #333;
-}
+        .sub-title {
+            font-size: 1.5rem;
+            color: #333;
+        }
 
-.highlight-text {
-    color: #00e0ff; /* Adjust color as needed */
-    margin-bottom: 1rem;
-}
+        .highlight-text {
+            color: #00e0ff; 
+            margin-bottom: 1rem;
+        }
 
-.how-it-works-list {
-    list-style: none; /* Remove default list styling */
-    padding: 0;
-    margin: 0;
-}
+        .how-it-works-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-.how-it-works-list li {
-    position: relative;
-    padding-left: 2.5rem; /* Space for the image */
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    line-height: 1.5;
-}
-
-
-
-.primary-btn {
-    background-color: #007bff; /* Adjust color as needed */
-    color: #fff;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-}
-
-.primary-btn i {
-    margin-left: 0.5rem;
-}
+        .how-it-works-list li {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
 
 
+
+        .primary-btn {
+            background-color: #007bff; 
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .primary-btn i {
+            margin-left: 0.5rem;
+        }
 
     </style>
+    
     <div class="loader-wrapper position-fixed inset-0 justify-content-center align-items-center z-[9999] h-screen w-full bg-white">
         <div class="loader"></div>
     </div>

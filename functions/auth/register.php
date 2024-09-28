@@ -6,7 +6,8 @@ $name = $_POST['name'];
 $phone = $_POST['phone'];
 $email = $_POST['email'];
 $password = md5($_POST['password']);
-$address_one = $_POST['address_one'];
+$address_one = $_POST['address_one']; 
+$age_agreement = $_POST['age_agreement']; 
 
 $query = "SELECT * FROM users WHERE email = ?";
 $stmt = $conn->prepare($query);
@@ -21,7 +22,7 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 
-$query = "INSERT INTO `users`(`type`, `name`, `email`, `mobile`, `password`, `address_one`) VALUES (?, ?, ?, ?, ?, ?)";
+$query = "INSERT INTO `users`(`type`, `name`, `email`, `mobile`, `password`, `address_one`,`age_agreement`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($query);
 
 if (!$stmt) {
@@ -30,7 +31,7 @@ if (!$stmt) {
 }
 
 $type = 'C';
-$stmt->bind_param("ssssss", $type, $name, $email, $phone, $password, $address_one);
+$stmt->bind_param("sssssss", $type, $name, $email, $phone, $password, $address_one, $age_agreement);
 
 if ($stmt->execute()) {
     echo json_encode(['success' => true]);

@@ -19,14 +19,14 @@
                                 </select>
                             </div>
                             <div class="mb-2 col-md-4">
-                                <label for="typeOfProduct" class="form-label"><b>Type Of Product <span class="text-danger">*</span></b></label>
+                                <label for="typeOfProduct" class="form-label"><b>Select Product Condition <span class="text-danger">*</span></b></label>
                                 <select class="form-select mb-3" name="typeOfProduct" id="typeOfProduct" required>
-                                    <option label="Select type"></option>
+                                    <option label="Select condition"></option>
                                     <option value="New">New</option>
                                     <option value="Used">Used</option>
                                 </select>
                             </div>
-                            <div class="mb-2 col-md-4">
+                            <div class="mb-2 col-md-4"> 
                                 <label for="inventoryNumber" class="form-label"><b>Inventory No. <span class="text-danger">*</span></b></label>
                                 <div class="input-group">
                                     <input required type="text" class="form-control" placeholder="Enter inventory number" name="inventoryNumber" id="inventoryNumber">
@@ -37,12 +37,12 @@
                                 <input required type="text" class="form-control" name="productManufacturer" id="productManufacturer" placeholder="Enter the name of manufacturer">
                             </div>
                             <div class="mb-2 col-md-4">
-                                <label for="productModel" class="form-label"><b>Model <span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="productModel" id="productModel" placeholder="Enter the name of model">
+                                <label for="productModel" class="form-label"><b>Enter Make and Model <span class="text-danger">*</span></b></label>
+                                <input required type="text" class="form-control" name="productModel" id="productModel" placeholder="Enter make and model">
                             </div>
                             <div class="mb-2 col-md-4">
-                                <label for="productCaliber" class="form-label"><b>Caliber <span class="text-danger">*</span></b></label>
-                                <input required type="text" class="form-control" name="productCaliber" id="productCaliber" placeholder="Enter the name of model">
+                                <label for="productCaliber" class="form-label"><b>Enter Caliber <span class="text-danger">*</span></b></label>
+                                <input required type="text" class="form-control" name="productCaliber" id="productCaliber" placeholder="Enter caliber">
                             </div>
                             <div class="mb-2 col-md-4">
                                 <label for="productPrice" class="form-label"><b>Price <span class="text-danger">*</span></b></label>

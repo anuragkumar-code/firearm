@@ -159,7 +159,7 @@ while($productImageData = $resultImage->fetch_assoc()){
                                     <div class="d-flex align-items-center">
                                         <i class="fa-solid fa-box fa-2x me-3"></i>
                                         <div>
-                                            <h5><b>Type of Product</b></h5>
+                                            <h5><b>Product Condition</b></h5>
                                             <p class="mb-0"><?php echo $productData['type_of_component']; ?></p>
                                         </div>
                                     </div>
